@@ -1965,6 +1965,10 @@
         <div class="hero-pill hero-pill-freedom">
           <span>⚖️ MIT Licensed &bull; Free to Distribute & Sell</span>
         </div>
+        <div class="hero-pill hero-pill-downloads" id="hero-download-pill" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.35); color: #34d399;">
+          <span class="pulse-dot" style="background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
+          <span><strong id="hero-download-count">...</strong> Downloads</span>
+        </div>
       </div>
 
       <h1 class="hero-title">
@@ -2271,8 +2275,9 @@
               </div>
             </div>
           </div>
-          <div id="banner-badge" class="hero-pill hero-pill-emerald">
-            <span>✨ 100% Client-Side MV3</span>
+          <div id="banner-badge" class="hero-pill hero-pill-emerald" style="display: inline-flex; align-items: center; gap: 6px;">
+            <span class="pulse-dot" style="background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
+            <span><strong id="section-download-count">...</strong> Downloads</span>
           </div>
         </div>
 
@@ -2286,7 +2291,7 @@
                 <span class="download-card-badge">Recommended</span>
               </div>
               <h4 class="download-card-title">Production ZIP Package</h4>
-              <div class="download-card-meta">v1.0.0 &bull; 59.5 KB &bull; Chrome MV3</div>
+              <div class="download-card-meta">v1.0.0 &bull; 59.5 KB &bull; <span id="card-download-count">...</span> Downloads</div>
               <p class="download-card-desc">
                 Production-ready Chrome extension archive. Pure vanilla JS with zero external dependencies. Extract and load into Chrome, Brave, Edge, or Opera in 60 seconds.
               </p>
@@ -2867,6 +2872,91 @@
     mobileLinks.forEach(link => {
       link.addEventListener('click', closeMobileMenu);
     });
+  </script>
+
+  <!-- Live Public Download Counter & Click Tracker -->
+  <script>
+    (function() {
+      const PRIMARY_GET = 'https://abacus.jasoncameron.dev/get/pulsex/downloads';
+      const PRIMARY_HIT = 'https://abacus.jasoncameron.dev/hit/pulsex/downloads';
+      const BACKUP_GET = 'https://countapi.mileshilliard.com/api/v1/get/pulsex_downloads_v1';
+      const BACKUP_HIT = 'https://countapi.mileshilliard.com/api/v1/hit/pulsex_downloads_v1';
+
+      let currentCount = null;
+
+      function updateDisplays(count) {
+        if (typeof count !== 'number' || isNaN(count)) return;
+        currentCount = count;
+        const formatted = count.toLocaleString();
+        const heroEl = document.getElementById('hero-download-count');
+        const sectionEl = document.getElementById('section-download-count');
+        const cardEl = document.getElementById('card-download-count');
+
+        if (heroEl) heroEl.textContent = formatted;
+        if (sectionEl) sectionEl.textContent = formatted;
+        if (cardEl) cardEl.textContent = formatted;
+      }
+
+      // Fetch live count on page load
+      async function fetchCount() {
+        try {
+          const res = await fetch(PRIMARY_GET);
+          if (res.ok) {
+            const data = await res.json();
+            if (typeof data.value === 'number') {
+              updateDisplays(data.value);
+              return;
+            }
+          }
+        } catch (e) {}
+
+        // Fallback counter
+        try {
+          const res = await fetch(BACKUP_GET);
+          if (res.ok) {
+            const data = await res.json();
+            if (typeof data.value === 'number') {
+              updateDisplays(data.value);
+            }
+          }
+        } catch (e) {}
+      }
+
+      // Track download click
+      let lastTrackTime = 0;
+      function trackDownload() {
+        const now = Date.now();
+        // Throttle 3 seconds to avoid accidental rapid double-clicks
+        if (now - lastTrackTime < 3000) return;
+        lastTrackTime = now;
+
+        // Optimistic UI update
+        if (currentCount !== null) {
+          updateDisplays(currentCount + 1);
+        }
+
+        // Send non-blocking background hit to increment live count
+        try {
+          fetch(PRIMARY_HIT, { mode: 'cors' }).catch(() => {});
+          fetch(BACKUP_HIT, { mode: 'cors' }).catch(() => {});
+        } catch (e) {}
+      }
+
+      // Wire all download buttons on page
+      function initDownloadTracker() {
+        fetchCount();
+        const downloadLinks = document.querySelectorAll('a[download], #hero-download-btn, #direct-zip-btn, a[href="pulsex-cws.zip"]');
+        downloadLinks.forEach(link => {
+          link.addEventListener('click', trackDownload);
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initDownloadTracker);
+      } else {
+        initDownloadTracker();
+      }
+    })();
   </script>
 
   <!-- Cloudflare Web Analytics -->

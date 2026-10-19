@@ -6,7 +6,7 @@ export function getShadowStyles() {
   return `
     :host {
       all: initial;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       box-sizing: border-box;
       -webkit-font-smoothing: antialiased;
     }
@@ -16,40 +16,68 @@ export function getShadowStyles() {
       padding: 0;
     }
 
-    /* Core Obsidian Emerald Theme Variables */
+    /* Core Obsidian Emerald Cyber Theme Variables */
     .pulsex-root {
-      --px-bg: rgba(11, 15, 23, 0.92);
-      --px-bg-elevated: rgba(17, 24, 39, 0.85);
-      --px-border: rgba(16, 185, 129, 0.25);
-      --px-border-hover: rgba(16, 185, 129, 0.6);
+      --px-bg: rgba(9, 11, 17, 0.95);
+      --px-bg-elevated: #151b28;
+      --px-surface: #0f131d;
+      --px-card-beveled: #121622;
+      --px-border: rgba(255, 255, 255, 0.08);
+      --px-border-hover: rgba(56, 189, 248, 0.4);
       --px-emerald: #10b981;
       --px-emerald-light: #34d399;
       --px-cyan: #06b6d4;
+      --px-cyan-neon: #38bdf8;
+      --px-violet-neon: #8b5cf6;
+      --px-iridescent: linear-gradient(135deg, #b8c7ff 0%, #d8e2ff 40%, #fffae0 70%, #fde68a 100%);
       --px-text-primary: #f8fafc;
-      --px-text-secondary: #94a3b8;
-      --px-text-muted: #64748b;
+      --px-text-secondary: #8b9bb4;
+      --px-text-muted: #5b697e;
       --px-glass-blur: blur(14px);
     }
 
     /* Inline Toolbar Container */
     .pulsex-inline-bar {
       margin: 10px 0;
-      padding: 10px 14px;
+      padding: 12px 16px;
       background: var(--px-bg);
       backdrop-filter: var(--px-glass-blur);
       -webkit-backdrop-filter: var(--px-glass-blur);
       border: 1px solid var(--px-border);
-      border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 12px rgba(16, 185, 129, 0.12);
+      border-radius: 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.08);
       display: flex;
       flex-direction: column;
       gap: 10px;
       color: var(--px-text-primary);
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+    .pulsex-inline-bar::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 24%;
+      bottom: 24%;
+      width: 3.5px;
+      background: var(--px-violet-neon);
+      box-shadow: 0 0 10px var(--px-violet-neon);
+      border-radius: 0 2px 2px 0;
+    }
+    .pulsex-inline-bar::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      right: 20px;
+      width: 44px;
+      height: 3px;
+      background: var(--px-cyan-neon);
+      box-shadow: 0 0 12px var(--px-cyan-neon), 0 0 20px var(--px-cyan-neon);
+      border-radius: 2px;
     }
     .pulsex-inline-bar:hover {
       border-color: var(--px-border-hover);
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 16px rgba(16, 185, 129, 0.2);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), 0 0 24px rgba(56, 189, 248, 0.15);
     }
 
     /* Header / Brand Pill */
@@ -136,12 +164,12 @@ export function getShadowStyles() {
     }
     .pulsex-raw-input {
       flex: 1;
-      height: 32px;
+      height: 34px;
       padding: 0 12px;
       font-size: 12px;
       color: var(--px-text-primary);
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--px-card-beveled);
+      border: 1px solid var(--px-border);
       border-radius: 8px;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
@@ -150,8 +178,8 @@ export function getShadowStyles() {
       color: var(--px-text-muted);
     }
     .pulsex-raw-input:focus {
-      border-color: var(--px-emerald);
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+      border-color: var(--px-cyan-neon);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
     }
 
     .pulsex-btn-generate {
@@ -172,7 +200,7 @@ export function getShadowStyles() {
       display: none;
       padding: 10px 12px;
       background: rgba(0, 0, 0, 0.3);
-      border: 1px dashed rgba(16, 185, 129, 0.3);
+      border: 1px dashed rgba(56, 189, 248, 0.35);
       border-radius: 8px;
       font-size: 12.5px;
       line-height: 1.45;
@@ -184,6 +212,16 @@ export function getShadowStyles() {
       gap: 6px;
       margin-top: 8px;
       justify-content: flex-end;
+    }
+    .pulsex-btn-insert {
+      background: var(--px-iridescent) !important;
+      color: #0b0f19 !important;
+      border: none !important;
+      font-weight: 800 !important;
+      box-shadow: 0 4px 14px rgba(184, 199, 255, 0.45);
+    }
+    .pulsex-btn-insert:hover {
+      box-shadow: 0 6px 20px rgba(184, 199, 255, 0.65);
     }
 
     /* Floating Copilot Trigger Button */
@@ -391,25 +429,27 @@ export function getShadowStyles() {
       opacity: 0.9;
     }
 
-    /* Insert Action */
+    /* Insert Action with Reference Pastel Iridescent Button */
     .pulsex-insert-btn {
       width: 100%;
-      padding: 9px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 700;
+      padding: 10px;
+      border-radius: 9px;
+      background: var(--px-iridescent);
+      color: #0b0f19;
+      font-size: 12.5px;
+      font-weight: 800;
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 4px 18px rgba(184, 199, 255, 0.45);
+      transition: transform 0.18s, box-shadow 0.18s;
     }
     .pulsex-insert-btn:hover {
-      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(184, 199, 255, 0.65);
     }
 
     /* Spinner Animation */
@@ -474,7 +514,7 @@ export function renderInlineBarTemplate() {
           <div class="pulsex-preview-text"></div>
           <div class="pulsex-preview-actions">
             <button class="pulsex-btn pulsex-btn-discard">Discard</button>
-            <button class="pulsex-btn pulsex-btn-insert" style="background: rgba(16, 185, 129, 0.25); color: #fff; border-color: #10b981;">
+            <button class="pulsex-btn pulsex-btn-insert">
               Insert into Tweet
             </button>
           </div>

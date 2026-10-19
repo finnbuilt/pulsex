@@ -6,14 +6,24 @@
   <title>PulseX — AI Superpowers for X | 100% Free Forever & Universal BYOK</title>
   <meta name="description" content="The anti-slop AI reply assistant and noise filter for X (Twitter). 100% Free Forever, free to distribute and sell under MIT. Zero em-dashes. Universal BYOK for DeepSeek, OpenAI, Claude, Gemini, Groq, and Ollama. Built by @finnbuilt.">
   <link rel="icon" type="image/svg+xml" href="../extension/icons/icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-base: #05080d;
-      --bg-surface: #0a0f16;
-      --bg-surface-elevated: rgba(13, 20, 31, 0.7);
+      --bg-base: #090b11;
+      --bg-surface: #0f131d;
+      --bg-card: #151b28;
+      --bg-card-beveled: #121622;
+      --bg-surface-elevated: rgba(21, 27, 40, 0.75);
       --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-cyber: rgba(56, 189, 248, 0.25);
       --border-emerald: rgba(16, 185, 129, 0.25);
       --border-emerald-glow: rgba(16, 185, 129, 0.5);
+      --cyan-neon: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.4);
+      --violet-neon: #8b5cf6;
+      --violet-glow: rgba(139, 92, 246, 0.4);
       --emerald: #10b981;
       --emerald-light: #34d399;
       --emerald-glow: rgba(16, 185, 129, 0.28);
@@ -21,9 +31,11 @@
       --amber: #f59e0b;
       --danger: #ef4444;
       --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --text-muted: #8b9bb4;
+      --text-dim: #5b697e;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --iridescent-gradient: linear-gradient(135deg, #b8c7ff 0%, #d8e2ff 40%, #fffae0 70%, #fde68a 100%);
       --transition-smooth: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -40,13 +52,13 @@
     body {
       background-color: var(--bg-base);
       color: var(--text-main);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: var(--font-sans);
       line-height: 1.6;
       overflow-x: hidden;
       background-image:
-        radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.16) 0%, transparent 55%),
-        radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.09) 0%, transparent 45%),
-        radial-gradient(circle at 15% 65%, rgba(16, 185, 129, 0.07) 0%, transparent 45%);
+        radial-gradient(circle at 50% 0%, rgba(20, 34, 54, 0.6) 0%, transparent 60%),
+        radial-gradient(circle at 85% 30%, rgba(27, 21, 45, 0.5) 0%, transparent 50%),
+        radial-gradient(circle at 15% 65%, rgba(16, 185, 129, 0.08) 0%, transparent 45%);
     }
 
     /* Container */

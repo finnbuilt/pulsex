@@ -115,11 +115,11 @@
 **Files:**
 - Git repository `main` branch.
 
-- [ ] **Step 1: Stage and commit changes**
+- [x] **Step 1: Stage and commit changes**
   `git commit -m "feat: apply exact cyber colors, typography, and card aesthetics from reference image"`
 
-- [ ] **Step 2: Push to GitHub remote**
+- [x] **Step 2: Push to GitHub remote**
   Push to `https://github.com/finnbuilt/pulsex.git` as `finnbuilt`.
 
-- [ ] **Step 3: Verify live deployment & contributors API**
+- [x] **Step 3: Verify live deployment & contributors API**
   Confirm GitHub Pages HTTP 200 and contributor count = 1.

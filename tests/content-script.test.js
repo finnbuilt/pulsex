@@ -50,6 +50,14 @@ test('TimelineManager implements two-state mounting: collapsed pill button vs ex
   assert.ok(code.includes('this.mountCollapsedButton(inlineReply, editorEl);'), 'must mount collapsed button when in collapsed state');
   assert.ok(code.includes('lingeringFullBar.remove()'), 'must clean up lingering full bar in collapsed state');
   assert.ok(code.includes("inlineReply.querySelectorAll('.pulsex-collapsed-host').forEach(el => el.remove())"), 'must clean up collapsed host in expanded state');
+
+  // Verify click-to-expand user flow (first see button, click to see full interface)
+  assert.ok(code.includes('px-trigger-bar'), 'must include trigger bar view showing button first');
+  assert.ok(code.includes('px-trigger-btn'), 'must include trigger button');
+  assert.ok(code.includes('px-full-bar'), 'must include full interface bar shown upon click');
+  assert.ok(code.includes('px-close-btn'), 'must include close/collapse button');
+  assert.ok(code.includes("triggerBar.style.display = 'none'"), 'must hide trigger bar when expanding full interface');
+  assert.ok(code.includes("fullBar.style.display = 'flex'"), 'must display full interface when clicked');
 });
 
 

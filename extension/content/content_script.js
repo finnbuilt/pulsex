@@ -101,6 +101,73 @@
         align-items: center;
         gap: 4px;
       }
+      .pulsex-header-right {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .pulsex-close-btn {
+        background: none;
+        border: none;
+        color: var(--px-text-muted);
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 1;
+        padding: 4px 6px;
+        border-radius: 4px;
+        transition: all 0.15s ease;
+      }
+      .pulsex-close-btn:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      /* Trigger Bar (Shown initially before expansion) */
+      .pulsex-trigger-bar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 4px 0;
+        width: 100%;
+      }
+      .pulsex-trigger-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        height: 34px;
+        padding: 0 16px;
+        border-radius: 9999px;
+        background: linear-gradient(135deg, rgba(6, 78, 59, 0.45) 0%, rgba(16, 185, 129, 0.22) 60%, rgba(6, 182, 212, 0.25) 100%);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(16, 185, 129, 0.45);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35), 0 0 10px rgba(16, 185, 129, 0.2);
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        user-select: none;
+        outline: none;
+      }
+      .pulsex-trigger-btn:hover {
+        background: linear-gradient(135deg, rgba(6, 78, 59, 0.65) 0%, rgba(16, 185, 129, 0.35) 60%, rgba(6, 182, 212, 0.4) 100%);
+        border-color: #10b981;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 18px rgba(16, 185, 129, 0.45);
+        transform: translateY(-1px);
+      }
+      .pulsex-trigger-btn:active {
+        transform: translateY(0);
+      }
+      .pulsex-trigger-text {
+        background: linear-gradient(135deg, #ffffff 0%, #34d399 65%, #38bdf8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
 
       /* Angles Row */
       .pulsex-angles-row {
@@ -1250,6 +1317,9 @@
         e.preventDefault();
         e.stopPropagation();
 
+        // User clicked Reply with PulseX: expand Twitter composer AND auto-open PulseX full interface
+        inlineReply.dataset.pulsexAutoOpen = 'true';
+
         const trigger = inlineReply.querySelector('[role="textbox"], [data-testid="tweetTextarea_0_label"], [data-testid="tweetTextarea_0"], div[contenteditable="true"]') || inlineReply;
 
         if (trigger) {
@@ -1377,19 +1447,35 @@
         e.stopPropagation();
       });
 
+      // Check if user clicked from collapsed button or requested auto-open
+      const shouldAutoOpen = inlineReply && inlineReply.dataset.pulsexAutoOpen === 'true';
+      if (inlineReply) delete inlineReply.dataset.pulsexAutoOpen;
+
       const shadow = host.attachShadow({ mode: 'open' });
       shadow.innerHTML = `
         <style>${getPulseXStyles()}</style>
         <div class="px-theme">
-          <div class="pulsex-inline-bar">
+          <!-- 1. Sleek Trigger Button View (First thing user sees in composer) -->
+          <div class="pulsex-trigger-bar" id="px-trigger-bar" style="display: ${shouldAutoOpen ? 'none' : 'flex'};">
+            <button type="button" class="pulsex-trigger-btn" id="px-trigger-btn" title="Expand PulseX Reply AI">
+              <span class="pulsex-pulse-dot"></span>
+              <span class="pulsex-trigger-text">Reply with PulseX</span>
+            </button>
+          </div>
+
+          <!-- 2. Full Interface View (Shown when user clicks Reply with PulseX) -->
+          <div class="pulsex-inline-bar" id="px-full-bar" style="display: ${shouldAutoOpen ? 'flex' : 'none'};">
             <div class="pulsex-bar-header">
               <div class="pulsex-brand">
                 <span class="pulsex-pulse-dot"></span>
                 <span class="pulsex-brand-title">PulseX Reply</span>
                 <a href="https://x.com/finnbuilt" target="_blank" rel="noreferrer" class="pulsex-header-author" title="Built by @finnbuilt">by @finnbuilt</a>
               </div>
-              <div class="pulsex-target-badge">
-                <span>Replying to <strong>${nameToDisplay}</strong> ${isNested ? '(in thread)' : ''}</span>
+              <div class="pulsex-header-right">
+                <div class="pulsex-target-badge">
+                  <span>Replying to <strong>${nameToDisplay}</strong> ${isNested ? '(in thread)' : ''}</span>
+                </div>
+                <button type="button" class="pulsex-close-btn" id="px-close-btn" title="Collapse PulseX">✕</button>
               </div>
             </div>
 
@@ -1471,6 +1557,33 @@
     }
 
     bindBarEvents(shadow, editorEl, targetData, rootData, isNested) {
+      const triggerBar = shadow.querySelector('#px-trigger-bar');
+      const triggerBtn = shadow.querySelector('#px-trigger-btn');
+      const fullBar = shadow.querySelector('#px-full-bar');
+      const closeBtn = shadow.querySelector('#px-close-btn');
+
+      if (triggerBtn && fullBar && triggerBar) {
+        triggerBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          triggerBar.style.display = 'none';
+          fullBar.style.display = 'flex';
+          const inputToFocus = shadow.querySelector('.pulsex-raw-input');
+          if (inputToFocus) {
+            setTimeout(() => inputToFocus.focus(), 60);
+          }
+        });
+      }
+
+      if (closeBtn && fullBar && triggerBar) {
+        closeBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          fullBar.style.display = 'none';
+          triggerBar.style.display = 'flex';
+        });
+      }
+
       const rawInput = shadow.querySelector('.pulsex-raw-input');
       const genBtn = shadow.querySelector('.pulsex-btn-generate');
       const angleBtns = shadow.querySelectorAll('.pulsex-angle-btn');
@@ -1679,6 +1792,10 @@
         previewBox.style.display = 'none';
         drafts = [];
         activeIndex = 0;
+        if (fullBar && triggerBar) {
+          fullBar.style.display = 'none';
+          triggerBar.style.display = 'flex';
+        }
       });
 
       insertBtn.addEventListener('click', (e) => {

@@ -778,48 +778,47 @@
       if (typeof editor.click === 'function') editor.click();
     } catch (e) {}
 
-    const textBefore = (editor.innerText || editor.textContent || '').trim();
-    const probe = textToInsert.trim().slice(0, 25).trim();
-    let inserted = false;
+    // Select all content inside editor so new text replaces any existing text rather than appending
+    if (typeof window !== 'undefined' && window.getSelection && document.createRange) {
+      try {
+        const sel = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(editor);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      } catch (e) {}
+    }
 
-    // Strategy 1: Native execCommand('selectAll') + execCommand('insertText')
-    // This triggers Draft.js internal change handler to register text into React state
+    let commandExecuted = false;
+
+    // Single-dispatch native insertion:
+    // In Draft.js & Lexical, execCommand('insertText') fires beforeinput which React intercepts.
+    // Calling execCommand('insertText') exactly ONCE is crucial. Multiple calls trigger multiple
+    // input events, causing duplicate text insertion in the composer.
     if (typeof document !== 'undefined' && document.execCommand) {
       try {
         document.execCommand('selectAll', false, null);
         document.execCommand('insertText', false, textToInsert);
+        commandExecuted = true;
       } catch (e) {}
-
-      // In modern Chrome/Blink, execCommand('insertText') inserts text successfully but returns false.
-      // We directly check the editor content so we NEVER run Strategy 2 if text is already present.
-      const textAfter = (editor.innerText || editor.textContent || '').trim();
-      if ((probe && textAfter.includes(probe)) || (textAfter.length > 0 && textAfter !== textBefore)) {
-        inserted = true;
-      }
-
-      // Strategy 2: If and ONLY IF the text was NOT inserted at all, attempt Range fallback
-      if (!inserted && typeof window !== 'undefined' && window.getSelection && document.createRange) {
-        try {
-          const sel = window.getSelection();
-          const range = document.createRange();
-          range.selectNodeContents(editor);
-          range.collapse(false);
-          sel.removeAllRanges();
-          sel.addRange(range);
-          document.execCommand('insertText', false, textToInsert);
-        } catch (e) {}
-      }
     }
 
-    // Strategy 3: Fire input and change events to ensure React / Draft.js state registers
+    // Fallback only if execCommand was unavailable or threw an exception
+    if (!commandExecuted && editor.isContentEditable) {
+      try {
+        editor.textContent = textToInsert;
+      } catch (e) {}
+    }
+
+    // Fire input and change events to ensure React / Draft.js state registers
     try {
       if (typeof Event !== 'undefined') {
-        editor.dispatchEvent(new Event('input', { bubbles: true }));
-        editor.dispatchEvent(new Event('change', { bubbles: true }));
+        editor.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+        editor.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
       }
     } catch (e) {}
 
-    // Strategy 4: Always write to clipboard so user can also Ctrl+V as an instant backup
+    // Always write to clipboard so user can also Ctrl+V as an instant backup
     if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(textToInsert).catch(() => {});
     }

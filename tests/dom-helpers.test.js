@@ -163,4 +163,80 @@ test('insertTextIntoTwitterEditor does not duplicate text even if execCommand re
   }
 });
 
+test('insertTextIntoTwitterEditor calls insertText exactly once even when editor DOM does not update synchronously (Draft.js async React)', () => {
+  let insertTextCalls = 0;
+  const mockEditor = {
+    isContentEditable: true,
+    innerText: '', // Remains empty during synchronous execution as Draft.js intercepts beforeinput
+    focus: () => {},
+    click: () => {},
+    dispatchEvent: () => true
+  };
+
+  const origDocument = globalThis.document;
+  try {
+    globalThis.document = {
+      execCommand: (cmd) => {
+        if (cmd === 'insertText') {
+          insertTextCalls++;
+          // Do NOT update mockEditor.innerText synchronously
+          return false;
+        }
+        return true;
+      }
+    };
+
+    const text = "numbers don't lie, that's the whole point. most gurus sell courses but can't show receipts like this.";
+    const success = insertTextIntoTwitterEditor(mockEditor, text);
+
+    assert.equal(success, true);
+    assert.equal(insertTextCalls, 1, 'MUST execute insertText exactly once and never trigger redundant fallback');
+  } finally {
+    globalThis.document = origDocument;
+  }
+});
+
+test('insertTextIntoTwitterEditor sets selection to replace existing draft rather than appending', () => {
+  let selectAllCalled = false;
+  let rangeSelected = false;
+
+  const mockEditor = {
+    isContentEditable: true,
+    innerText: 'Old draft text here',
+    focus: () => {},
+    click: () => {},
+    dispatchEvent: () => true
+  };
+
+  const origDocument = globalThis.document;
+  const origWindow = globalThis.window;
+
+  try {
+    globalThis.document = {
+      execCommand: (cmd) => {
+        if (cmd === 'selectAll') selectAllCalled = true;
+        return true;
+      },
+      createRange: () => ({
+        selectNodeContents: (el) => {
+          if (el === mockEditor) rangeSelected = true;
+        }
+      })
+    };
+    globalThis.window = {
+      getSelection: () => ({
+        removeAllRanges: () => {},
+        addRange: () => {}
+      })
+    };
+
+    insertTextIntoTwitterEditor(mockEditor, 'New replacement reply');
+    assert.equal(selectAllCalled, true, 'must execute selectAll to select existing content');
+    assert.equal(rangeSelected, true, 'must select node contents on mockEditor range');
+  } finally {
+    globalThis.document = origDocument;
+    globalThis.window = origWindow;
+  }
+});
+
 

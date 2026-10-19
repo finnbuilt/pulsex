@@ -215,9 +215,14 @@ export class CopilotDrawer {
     });
 
     // Insert Latest Reply into active Twitter editor
-    insertBtn.addEventListener('click', () => {
+    insertBtn.addEventListener('click', (e) => {
+      e?.preventDefault?.();
+      if (insertBtn.dataset.busy === 'true') return;
+      insertBtn.dataset.busy = 'true';
+
       if (!this.latestAssistantReply) {
         alert('No reply generated yet! Ask Copilot for a suggestion first.');
+        delete insertBtn.dataset.busy;
         return;
       }
 
@@ -226,7 +231,18 @@ export class CopilotDrawer {
       if (textareas.length > 0) {
         const editor = textareas[0].getAttribute('role') === 'textbox' ? textareas[0] : textareas[0].querySelector('[role="textbox"]') || textareas[0];
         insertTextIntoTwitterEditor(editor, this.latestAssistantReply);
-        closeDrawer();
+        insertBtn.innerHTML = '<span>✅ Inserted!</span>';
+        setTimeout(() => {
+          closeDrawer();
+          insertBtn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 11 12 14 22 4"></polyline>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+            Insert Latest Reply into Tweet
+          `;
+          delete insertBtn.dataset.busy;
+        }, 600);
       } else {
         // Fallback: Copy to clipboard
         navigator.clipboard.writeText(this.latestAssistantReply);
@@ -239,6 +255,7 @@ export class CopilotDrawer {
             </svg>
             Insert Latest Reply into Tweet
           `;
+          delete insertBtn.dataset.busy;
         }, 2000);
       }
     });

@@ -323,47 +323,47 @@ export function insertTextIntoTwitterEditor(targetNode, textToInsert) {
     if (typeof editorEl.click === 'function') editorEl.click();
   } catch (e) {}
 
-  const textBefore = (editorEl.innerText || editorEl.textContent || '').trim();
-  const probe = textToInsert.trim().slice(0, 25).trim();
-  let inserted = false;
+  // Select all content inside editorEl so new text replaces any existing text rather than appending
+  if (typeof window !== 'undefined' && window.getSelection && document.createRange) {
+    try {
+      const sel = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(editorEl);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    } catch (e) {}
+  }
 
-  // 1. Native execCommand('selectAll') + execCommand('insertText') for Draft.js / Lexical
+  let commandExecuted = false;
+
+  // Single-dispatch native insertion:
+  // In Draft.js & Lexical, execCommand('insertText') fires beforeinput which React intercepts.
+  // Calling execCommand('insertText') exactly ONCE is crucial. Multiple calls fire multiple
+  // input events, causing duplicate text insertion in the composer.
   if (typeof document !== 'undefined' && document.execCommand) {
     try {
       document.execCommand('selectAll', false, null);
       document.execCommand('insertText', false, textToInsert);
+      commandExecuted = true;
     } catch (e) {}
-
-    // In modern Chrome/Blink, execCommand('insertText') inserts text properly but returns false.
-    // Check if text was inserted to prevent duplicate fallback insertion.
-    const textAfter = (editorEl.innerText || editorEl.textContent || '').trim();
-    if ((probe && textAfter.includes(probe)) || (textAfter.length > 0 && textAfter !== textBefore)) {
-      inserted = true;
-    }
-
-    // 2. Fallback caret collapse + insertText ONLY if text is not already present
-    if (!inserted && typeof window !== 'undefined' && window.getSelection && document.createRange) {
-      try {
-        const sel = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(editorEl);
-        range.collapse(false);
-        sel.removeAllRanges();
-        sel.addRange(range);
-        document.execCommand('insertText', false, textToInsert);
-      } catch (e) {}
-    }
   }
 
-  // 3. Dispatch input & change events for framework bindings (Draft.js React state sync)
+  // Fallback only if execCommand was unavailable or threw an exception
+  if (!commandExecuted && editorEl.isContentEditable) {
+    try {
+      editorEl.textContent = textToInsert;
+    } catch (e) {}
+  }
+
+  // Dispatch input & change events for framework bindings (Draft.js React state sync)
   try {
     if (typeof Event !== 'undefined') {
-      editorEl.dispatchEvent(new Event('input', { bubbles: true }));
-      editorEl.dispatchEvent(new Event('change', { bubbles: true }));
+      editorEl.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+      editorEl.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
     }
   } catch (e) {}
 
-  // 4. Always backup to clipboard
+  // Always backup to clipboard
   if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
     navigator.clipboard.writeText(textToInsert).catch(() => {});
   }

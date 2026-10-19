@@ -126,10 +126,21 @@ export class TimelineAssistant {
       latestGeneratedReply = '';
     });
 
-    insertBtn.addEventListener('click', () => {
+    insertBtn.addEventListener('click', (e) => {
+      e?.preventDefault?.();
+      if (insertBtn.dataset.busy === 'true') return;
+      insertBtn.dataset.busy = 'true';
+
       if (latestGeneratedReply) {
         insertTextIntoTwitterEditor(editorEl, latestGeneratedReply);
-        previewBox.style.display = 'none';
+        insertBtn.innerHTML = '<span>✅ Inserted!</span>';
+        setTimeout(() => {
+          previewBox.style.display = 'none';
+          insertBtn.innerHTML = '<span>Insert into Tweet</span>';
+          delete insertBtn.dataset.busy;
+        }, 600);
+      } else {
+        delete insertBtn.dataset.busy;
       }
     });
   }

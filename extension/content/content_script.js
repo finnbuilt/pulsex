@@ -789,36 +789,45 @@
       } catch (e) {}
     }
 
-    let commandExecuted = false;
+    let pasteHandled = false;
 
-    // Single-dispatch native insertion:
-    // In Draft.js & Lexical, execCommand('insertText') fires beforeinput which React intercepts.
-    // Calling execCommand('insertText') exactly ONCE is crucial. Multiple calls trigger multiple
-    // input events, causing duplicate text insertion in the composer.
-    if (typeof document !== 'undefined' && document.execCommand) {
+    // Method 1: Synthetic DataTransfer ClipboardEvent('paste')
+    // This is the gold standard for Draft.js & Lexical on Twitter/X web. Draft.js intercepts handlePastedText,
+    // updates internal React EditorState, and calls e.preventDefault(). This guarantees ZERO duplicate text.
+    if (typeof ClipboardEvent !== 'undefined' && typeof DataTransfer !== 'undefined') {
       try {
-        document.execCommand('selectAll', false, null);
-        document.execCommand('insertText', false, textToInsert);
-        commandExecuted = true;
+        const dt = new DataTransfer();
+        dt.setData('text/plain', textToInsert);
+        const pasteEvent = new ClipboardEvent('paste', {
+          bubbles: true,
+          cancelable: true,
+          clipboardData: dt
+        });
+        editor.dispatchEvent(pasteEvent);
+        if (pasteEvent.defaultPrevented) {
+          pasteHandled = true;
+        }
       } catch (e) {}
     }
 
-    // Fallback only if execCommand was unavailable or threw an exception
-    if (!commandExecuted && editor.isContentEditable) {
+    // Method 2: If ClipboardEvent was not handled by Draft.js, fallback to single-dispatch execCommand('insertText')
+    // Note: We deliberately do NOT dispatch manual synthetic 'input' events afterwards, as doing so causes
+    // Draft.js / React to catch the synthetic event as a second typing action and double-insert text.
+    if (!pasteHandled && typeof document !== 'undefined' && document.execCommand) {
+      try {
+        document.execCommand('selectAll', false, null);
+        document.execCommand('insertText', false, textToInsert);
+      } catch (e) {}
+    }
+
+    // Fallback 3: Direct textContent only if neither execCommand nor ClipboardEvent was available
+    if (!pasteHandled && (typeof document === 'undefined' || !document.execCommand) && editor.isContentEditable) {
       try {
         editor.textContent = textToInsert;
       } catch (e) {}
     }
 
-    // Fire input and change events to ensure React / Draft.js state registers
-    try {
-      if (typeof Event !== 'undefined') {
-        editor.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
-        editor.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-      }
-    } catch (e) {}
-
-    // Always write to clipboard so user can also Ctrl+V as an instant backup
+    // Always write to clipboard so user has an instant manual backup (Ctrl+V) if needed
     if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(textToInsert).catch(() => {});
     }

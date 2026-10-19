@@ -239,4 +239,67 @@ test('insertTextIntoTwitterEditor sets selection to replace existing draft rathe
   }
 });
 
+test('insertTextIntoTwitterEditor utilizes Synthetic DataTransfer paste and avoids execCommand when handled', () => {
+  let pasteDispatched = false;
+  let execCommandCalled = false;
+  let pastedText = '';
+
+  const mockEditor = {
+    isContentEditable: true,
+    focus: () => {},
+    click: () => {},
+    dispatchEvent: (ev) => {
+      if (ev.type === 'paste') {
+        pasteDispatched = true;
+        pastedText = ev.clipboardData.getData('text/plain');
+        ev.defaultPrevented = true; // Draft.js editOnPaste calls e.preventDefault()
+        return false;
+      }
+      return true;
+    }
+  };
+
+  class MockDataTransfer {
+    constructor() { this._data = {}; }
+    setData(type, val) { this._data[type] = val; }
+    getData(type) { return this._data[type] || ''; }
+  }
+
+  class MockClipboardEvent {
+    constructor(type, init) {
+      this.type = type;
+      this.clipboardData = init.clipboardData;
+      this.defaultPrevented = false;
+    }
+  }
+
+  const origClipboardEvent = globalThis.ClipboardEvent;
+  const origDataTransfer = globalThis.DataTransfer;
+  const origDocument = globalThis.document;
+
+  try {
+    globalThis.ClipboardEvent = MockClipboardEvent;
+    globalThis.DataTransfer = MockDataTransfer;
+    globalThis.document = {
+      execCommand: () => {
+        execCommandCalled = true;
+        return true;
+      }
+    };
+
+    const reply = "numbers don't lie, that's the whole point. most gurus sell courses but can't show receipts like this.";
+    const success = insertTextIntoTwitterEditor(mockEditor, reply);
+
+    assert.equal(success, true);
+    assert.equal(pasteDispatched, true, 'must dispatch synthetic paste event to Draft.js');
+    assert.equal(pastedText, reply, 'paste event must carry exact text payload');
+    assert.equal(execCommandCalled, false, 'must NOT execute redundant execCommand when paste was intercepted by Draft.js');
+  } finally {
+    globalThis.ClipboardEvent = origClipboardEvent;
+    globalThis.DataTransfer = origDataTransfer;
+    globalThis.document = origDocument;
+  }
+});
+
+
 

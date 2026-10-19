@@ -15,6 +15,10 @@ test('content_script.js is self-contained with no ES module import/export statem
   // Must include the core features
   assert.ok(code.includes('pulsex-floating-toggle'), 'must include floating copilot toggle');
   assert.ok(code.includes('pulsex-inline-bar'), 'must include in-timeline reply bar');
+  assert.ok(code.includes('pulsex-collapsed-host'), 'must include collapsed button host');
+  assert.ok(code.includes('pulsex-collapsed-btn'), 'must include collapsed button');
+  assert.ok(code.includes('Reply with PulseX'), 'must include Reply with PulseX button text');
+  assert.ok(code.includes('mountCollapsedButton'), 'must include mountCollapsedButton method');
   assert.ok(code.includes('pulsex-drawer'), 'must include copilot drawer');
   assert.ok(code.includes('pulsex-variants-tabs'), 'must include multi-variation tabs');
   assert.ok(code.includes('pulsex-metrics-pill'), 'must include real-time metrics pill');
@@ -36,4 +40,16 @@ test('content_script.js evaluates without runtime errors when DOM is present', (
     new Function(code);
   }, 'content_script.js must parse cleanly as a JavaScript function');
 });
+
+test('TimelineManager implements two-state mounting: collapsed pill button vs expanded full interface', () => {
+  const contentScriptPath = path.resolve('extension/content/content_script.js');
+  const code = fs.readFileSync(contentScriptPath, 'utf8');
+
+  // Verify collapsed detection logic
+  assert.ok(code.includes('const isCollapsed = inlineReply && !toolbar;'), 'must detect collapsed state by absence of toolbar');
+  assert.ok(code.includes('this.mountCollapsedButton(inlineReply, editorEl);'), 'must mount collapsed button when in collapsed state');
+  assert.ok(code.includes('lingeringFullBar.remove()'), 'must clean up lingering full bar in collapsed state');
+  assert.ok(code.includes("inlineReply.querySelectorAll('.pulsex-collapsed-host').forEach(el => el.remove())"), 'must clean up collapsed host in expanded state');
+});
+
 

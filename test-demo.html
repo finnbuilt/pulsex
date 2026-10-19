@@ -176,9 +176,25 @@
             }, 600);
           }
         }
+    // Simulate Twitter's click-to-expand composer behavior
+    document.querySelectorAll('[data-testid="Inline-Tweet-Reply"]').forEach(replyBox => {
+      const expand = () => {
+        if (!replyBox.querySelector('[data-testid="toolBar"]')) {
+          const toolbar = document.createElement('div');
+          toolbar.setAttribute('data-testid', 'toolBar');
+          toolbar.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding-top: 10px; margin-top: 10px; border-top: 1px solid #2f3336;';
+          toolbar.innerHTML = `
+            <div style="color: #1d9bf0; font-size: 14px; display: flex; gap: 12px; cursor: pointer;">🖼️ 🎬 📊 😀 ⏱️ 📍</div>
+            <button data-testid="tweetButtonInline" style="background: #1d9bf0; color: #fff; font-weight: 700; border: none; border-radius: 9999px; padding: 6px 16px; cursor: pointer;">Reply</button>
+          `;
+          replyBox.appendChild(toolbar);
+        }
       };
-    }
+      replyBox.addEventListener('click', expand);
+      replyBox.addEventListener('focusin', expand);
+    });
   </script>
+
 
   <!-- Inject PulseX Content Script -->
   <script src="extension/content/content_script.js"></script>

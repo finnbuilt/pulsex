@@ -1174,7 +1174,134 @@
       this.seenEditors = new WeakSet();
     }
 
+    mountCollapsedButton(inlineReply, editorEl) {
+      if (!inlineReply || inlineReply.querySelector('.pulsex-collapsed-host')) return;
+
+      const host = document.createElement('div');
+      host.className = 'pulsex-collapsed-host';
+      host.style.cssText = 'display: inline-flex !important; align-items: center !important; margin: 0 8px !important; flex-shrink: 0 !important; z-index: 5 !important; vertical-align: middle !important;';
+
+      const shadow = host.attachShadow({ mode: 'open' });
+      shadow.innerHTML = `
+        <style>
+          :host {
+            display: inline-flex !important;
+            align-items: center !important;
+          }
+          .pulsex-collapsed-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            height: 34px;
+            padding: 0 14px;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, rgba(6, 78, 59, 0.45) 0%, rgba(16, 185, 129, 0.22) 60%, rgba(6, 182, 212, 0.25) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(16, 185, 129, 0.45);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35), 0 0 10px rgba(16, 185, 129, 0.2);
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            outline: none;
+          }
+          .pulsex-collapsed-btn:hover {
+            background: linear-gradient(135deg, rgba(6, 78, 59, 0.65) 0%, rgba(16, 185, 129, 0.35) 60%, rgba(6, 182, 212, 0.4) 100%);
+            border-color: #10b981;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 18px rgba(16, 185, 129, 0.45);
+            transform: translateY(-1px);
+          }
+          .pulsex-collapsed-btn:active {
+            transform: translateY(0);
+          }
+          .pulsex-pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulsex-pulse-anim 2s infinite ease-in-out;
+          }
+          .pulsex-collapsed-text {
+            background: linear-gradient(135deg, #ffffff 0%, #34d399 65%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+          }
+          @keyframes pulsex-pulse-anim {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.35); }
+          }
+        </style>
+        <button type="button" class="pulsex-collapsed-btn" title="Expand composer with PulseX AI Assistant">
+          <span class="pulsex-pulse-dot"></span>
+          <span class="pulsex-collapsed-text">Reply with PulseX</span>
+        </button>
+      `;
+
+      const btn = shadow.querySelector('.pulsex-collapsed-btn');
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const trigger = inlineReply.querySelector('[role="textbox"], [data-testid="tweetTextarea_0_label"], [data-testid="tweetTextarea_0"], div[contenteditable="true"]') || inlineReply;
+
+        if (trigger) {
+          try {
+            if (typeof PointerEvent !== 'undefined') {
+              trigger.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true }));
+            }
+            trigger.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+            if (typeof trigger.focus === 'function') trigger.focus();
+            trigger.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+            if (typeof PointerEvent !== 'undefined') {
+              trigger.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, cancelable: true }));
+            }
+            trigger.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true }));
+            trigger.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+          } catch (err) {}
+        }
+
+        host.remove();
+
+        setTimeout(() => this.scan(), 50);
+        setTimeout(() => this.scan(), 150);
+        setTimeout(() => this.scan(), 350);
+        setTimeout(() => this.scan(), 700);
+      });
+
+      const nativeReplyBtn = inlineReply.querySelector('[data-testid="tweetButtonInline"], [data-testid*="tweetButton"]');
+      if (nativeReplyBtn && nativeReplyBtn.parentNode) {
+        nativeReplyBtn.parentNode.insertBefore(host, nativeReplyBtn);
+      } else {
+        inlineReply.appendChild(host);
+      }
+    }
+
     scan() {
+      // 1. Bidirectional sync: check for any inline replies that may have collapsed back
+      const inlineReplies = document.querySelectorAll('div[data-testid="Inline-Tweet-Reply"]');
+      for (const ir of inlineReplies) {
+        const tb = ir.querySelector('[data-testid="toolBar"]');
+        if (!tb) {
+          const lingeringFullBar = ir.querySelector('.pulsex-inline-container');
+          if (lingeringFullBar) lingeringFullBar.remove();
+
+          if (!ir.querySelector('.pulsex-collapsed-host')) {
+            const ed = ir.querySelector('[role="textbox"]') || ir;
+            this.seenEditors.delete(ed);
+            this.mountCollapsedButton(ir, ed);
+          }
+        }
+      }
+
+      // 2. Scan composer targets
       const selectors = [
         '[data-testid="tweetTextarea_0"]',
         '[data-testid="tweetTextarea_0_label"]',
@@ -1202,41 +1329,33 @@
                            editorEl.closest('[role="dialog"]') ||
                            label.parentNode;
 
-      if (composerRoot?.querySelector('.pulsex-inline-container') || label.parentNode?.querySelector('.pulsex-inline-container')) {
-        return;
-      }
-
       // Check if we are inside Twitter's inline reply section
       const inlineReply = editorEl.closest('[data-testid="Inline-Tweet-Reply"]');
       const toolbar = composerRoot?.querySelector('[data-testid="toolBar"]') ||
                       label.parentNode?.querySelector('[data-testid="toolBar"]');
 
-      // If Twitter's inline reply is in its collapsed 1-line state (no bottom toolBar yet):
-      // We auto-expand Twitter's composer with full pointer/mouse/focus events so it opens
-      // directly as the full un-squished composer (Image 2). We NEVER mount into the collapsed 1-line row.
-      const isCollapsed = inlineReply && !toolbar && (inlineReply.offsetHeight < 70 || inlineReply.querySelector('[data-testid*="tweetButton"], [data-testid="tweetButtonInline"]'));
+      // Collapsed quick-reply state detection (Image 1):
+      // Inside Inline-Tweet-Reply and bottom toolBar is not yet present
+      const isCollapsed = inlineReply && !toolbar;
 
       if (isCollapsed) {
-        if (!inlineReply.dataset.pulsexAutoExpanded) {
-          inlineReply.dataset.pulsexAutoExpanded = 'true';
-          const trigger = inlineReply.querySelector('[role="textbox"], [data-testid="tweetTextarea_0_label"], [data-testid="tweetTextarea_0"], div[contenteditable="true"]') || inlineReply;
-          if (trigger) {
-            try {
-              if (typeof PointerEvent !== 'undefined') {
-                trigger.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true }));
-              }
-              trigger.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
-              if (typeof trigger.focus === 'function') trigger.focus();
-              trigger.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
-              if (typeof PointerEvent !== 'undefined') {
-                trigger.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, cancelable: true }));
-              }
-              trigger.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true }));
-              trigger.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-            } catch (e) {}
-          }
-        }
-        // Never mount in the collapsed 1-line row. Wait for expanded composer with toolBar!
+        // Never mount the full 5-angle card in the collapsed 1-line row.
+        const lingeringFullBar = composerRoot?.querySelector('.pulsex-inline-container') || inlineReply.querySelector('.pulsex-inline-container');
+        if (lingeringFullBar) lingeringFullBar.remove();
+
+        // Mount the sleek "Reply with PulseX" button
+        this.mountCollapsedButton(inlineReply, editorEl);
+        return;
+      }
+
+      // In the expanded state (Image 2):
+      // 1. Remove any collapsed button
+      if (inlineReply) {
+        inlineReply.querySelectorAll('.pulsex-collapsed-host').forEach(el => el.remove());
+      }
+
+      // 2. Prevent duplicate full container
+      if (composerRoot?.querySelector('.pulsex-inline-container') || label.parentNode?.querySelector('.pulsex-inline-container')) {
         return;
       }
 

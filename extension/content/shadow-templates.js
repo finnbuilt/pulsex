@@ -224,6 +224,123 @@ export function getShadowStyles() {
       box-shadow: 0 6px 20px rgba(184, 199, 255, 0.65);
     }
 
+    /* Beautiful API Setup Card */
+    .px-api-setup-card {
+      padding: 14px 16px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(13, 20, 31, 0.95) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(16, 185, 129, 0.1);
+      text-align: left;
+      margin: 2px 0;
+    }
+    .px-setup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .px-setup-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--px-emerald-light);
+    }
+    .px-setup-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+    .px-setup-pill {
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      font-family: inherit;
+    }
+    .px-setup-body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .px-setup-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+    .px-setup-desc {
+      font-size: 11.5px;
+      color: var(--px-text-secondary);
+      line-height: 1.45;
+    }
+    .px-provider-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 4px;
+    }
+    .px-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .px-chip.active-chip {
+      color: #ffffff;
+      background: rgba(16, 185, 129, 0.2);
+      border-color: rgba(16, 185, 129, 0.5);
+      font-weight: 600;
+    }
+    .px-setup-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+    .px-setup-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.35);
+      transition: all 0.18s ease;
+    }
+    .px-setup-btn:hover {
+      transform: translateY(-1px);
+      background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.5);
+    }
+    .px-setup-tip {
+      font-size: 11px;
+      color: var(--px-text-muted);
+    }
+
     /* Floating Copilot Trigger Button */
     .pulsex-floating-toggle {
       position: fixed;
@@ -584,6 +701,49 @@ export function renderCopilotDrawerTemplate() {
             Built by <a href="https://x.com/finnbuilt" target="_blank" rel="noreferrer" class="pulsex-author-link">Finn (@finnbuilt) ↗</a>
           </div>
         </div>
+      </div>
+    </div>
+  `;
+}
+
+export function renderApiKeyMissingCard(providerName = 'AI Model') {
+  const isDeepSeek = /deepseek/i.test(providerName);
+  const isOpenAI = /openai/i.test(providerName);
+  const isClaude = /claude|anthropic/i.test(providerName);
+  const isGemini = /gemini|google/i.test(providerName);
+  const isGroq = /groq/i.test(providerName);
+  const isOpenRouter = /openrouter/i.test(providerName);
+  const isOllama = /ollama|local/i.test(providerName);
+
+  return `
+    <div class="px-api-setup-card">
+      <div class="px-setup-header">
+        <div class="px-setup-badge">
+          <span class="px-setup-dot"></span>
+          <span>Connect AI Provider</span>
+        </div>
+        <span class="px-setup-pill">${providerName} &bull; BYOK</span>
+      </div>
+      <div class="px-setup-body">
+        <div class="px-setup-title">Set up your API key to generate instant replies</div>
+        <div class="px-setup-desc">
+          PulseX is 100% free and open-source. Connect directly to your favorite model &mdash; zero markups, zero middleman servers.
+        </div>
+        <div class="px-provider-chips">
+          <span class="px-chip ${isDeepSeek ? 'active-chip' : ''}">🚀 DeepSeek</span>
+          <span class="px-chip ${isOpenAI ? 'active-chip' : ''}">🟢 OpenAI</span>
+          <span class="px-chip ${isClaude ? 'active-chip' : ''}">🟣 Claude</span>
+          <span class="px-chip ${isGemini ? 'active-chip' : ''}">🔵 Gemini</span>
+          <span class="px-chip ${isGroq ? 'active-chip' : ''}">⚡ Groq</span>
+          <span class="px-chip ${isOpenRouter ? 'active-chip' : ''}">🌐 OpenRouter</span>
+          <span class="px-chip ${isOllama ? 'active-chip' : ''}">💻 Ollama (Free)</span>
+        </div>
+      </div>
+      <div class="px-setup-actions">
+        <button type="button" class="px-setup-btn" id="px-open-settings-action">
+          <span>⚙️ Open PulseX Settings &rarr;</span>
+        </button>
+        <span class="px-setup-tip">Click to choose your provider & enter your key</span>
       </div>
     </div>
   `;

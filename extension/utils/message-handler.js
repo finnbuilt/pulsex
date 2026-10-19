@@ -110,6 +110,9 @@ export async function handleMessagePayload(message, deps = {}) {
         if (targetProvider.requiresKey && (!apiKey || !apiKey.trim())) {
           return {
             success: false,
+            code: 'API_KEY_MISSING',
+            provider: targetProvider.name,
+            providerId: targetProvider.id,
             error: `${targetProvider.name} API key not configured. Click the PulseX extension icon to add your API key.`
           };
         }
@@ -206,7 +209,13 @@ export async function handleMessagePayload(message, deps = {}) {
 
         const apiKey = payload.apiKey || (settings.providerKeys && settings.providerKeys[providerId]) || settings.apiKey || '';
         if (targetProvider.requiresKey && (!apiKey || !apiKey.trim())) {
-          return { success: false, error: `${targetProvider.name} API key not configured.` };
+          return {
+            success: false,
+            code: 'API_KEY_MISSING',
+            provider: targetProvider.name,
+            providerId: targetProvider.id,
+            error: `${targetProvider.name} API key not configured.`
+          };
         }
 
         const model = payload.model || settings.model || targetProvider.defaultModel;
@@ -251,7 +260,13 @@ export async function handleMessagePayload(message, deps = {}) {
 
         const apiKey = payload.apiKey || (settings.providerKeys && settings.providerKeys[providerId]) || settings.apiKey || '';
         if (targetProvider.requiresKey && (!apiKey || !apiKey.trim())) {
-          return { success: false, error: `${targetProvider.name} API key not configured.` };
+          return {
+            success: false,
+            code: 'API_KEY_MISSING',
+            provider: targetProvider.name,
+            providerId: targetProvider.id,
+            error: `${targetProvider.name} API key not configured.`
+          };
         }
 
         const model = payload.model || settings.model || targetProvider.defaultModel;
@@ -301,6 +316,9 @@ export async function handleMessagePayload(message, deps = {}) {
         if (targetProvider.requiresKey && (!apiKey || !apiKey.trim())) {
           return {
             success: false,
+            code: 'API_KEY_MISSING',
+            provider: targetProvider.name,
+            providerId: targetProvider.id,
             error: `${targetProvider.name} API key not configured. Click the PulseX extension icon to add your API key.`
           };
         }
@@ -381,6 +399,20 @@ export async function handleMessagePayload(message, deps = {}) {
               const current = (res?.adsFiltered || 0) + count;
               chrome.storage.local.set({ adsFiltered: current });
             });
+          }
+        }
+        return { success: true };
+      }
+
+      case 'OPEN_SETTINGS': {
+        if (typeof chrome !== 'undefined') {
+          if (chrome.runtime?.openOptionsPage) {
+            chrome.runtime.openOptionsPage();
+            return { success: true };
+          }
+          if (chrome.tabs?.create && chrome.runtime?.getURL) {
+            chrome.tabs.create({ url: chrome.runtime.getURL('popup/popup.html') });
+            return { success: true };
           }
         }
         return { success: true };

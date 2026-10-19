@@ -370,6 +370,123 @@
         font-weight: 700;
       }
 
+      /* Beautiful API Setup Card */
+      .px-api-setup-card {
+        padding: 14px 16px;
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(13, 20, 31, 0.95) 100%);
+        border: 1px solid rgba(16, 185, 129, 0.35);
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(16, 185, 129, 0.1);
+        text-align: left;
+        margin: 2px 0;
+      }
+      .px-setup-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .px-setup-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--px-emerald-light);
+      }
+      .px-setup-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 8px #10b981;
+      }
+      .px-setup-pill {
+        font-size: 10.5px;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 12px;
+        background: rgba(56, 189, 248, 0.15);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        color: #38bdf8;
+        font-family: inherit;
+      }
+      .px-setup-body {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .px-setup-title {
+        font-size: 13.5px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.3;
+      }
+      .px-setup-desc {
+        font-size: 11.5px;
+        color: var(--px-text-secondary);
+        line-height: 1.45;
+      }
+      .px-provider-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 4px;
+      }
+      .px-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 8px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 500;
+        color: #cbd5e1;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .px-chip.active-chip {
+        color: #ffffff;
+        background: rgba(16, 185, 129, 0.2);
+        border-color: rgba(16, 185, 129, 0.5);
+        font-weight: 600;
+      }
+      .px-setup-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 4px;
+        flex-wrap: wrap;
+      }
+      .px-setup-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(16, 185, 129, 0.35);
+        transition: all 0.18s ease;
+      }
+      .px-setup-btn:hover {
+        transform: translateY(-1px);
+        background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.5);
+      }
+      .px-setup-tip {
+        font-size: 11px;
+        color: var(--px-text-muted);
+      }
+
       /* Floating Copilot Toggle (Bottom-Right) */
       .pulsex-floating-toggle {
         position: fixed;
@@ -634,6 +751,50 @@
         0%, 100% { opacity: 0.8; transform: scale(1); }
         50% { opacity: 1; transform: scale(1.3); }
       }
+    `;
+  }
+
+  // --- Beautiful Multi-Provider API Setup Card ---
+  function renderApiKeyMissingCard(providerName = 'AI Model') {
+    const isDeepSeek = /deepseek/i.test(providerName);
+    const isOpenAI = /openai/i.test(providerName);
+    const isClaude = /claude|anthropic/i.test(providerName);
+    const isGemini = /gemini|google/i.test(providerName);
+    const isGroq = /groq/i.test(providerName);
+    const isOpenRouter = /openrouter/i.test(providerName);
+    const isOllama = /ollama|local/i.test(providerName);
+
+    return `
+      <div class="px-api-setup-card">
+        <div class="px-setup-header">
+          <div class="px-setup-badge">
+            <span class="px-setup-dot"></span>
+            <span>Connect AI Provider</span>
+          </div>
+          <span class="px-setup-pill">${providerName} &bull; BYOK</span>
+        </div>
+        <div class="px-setup-body">
+          <div class="px-setup-title">Set up your API key to generate instant replies</div>
+          <div class="px-setup-desc">
+            PulseX connects directly to any model you love &mdash; DeepSeek, OpenAI, Claude, Gemini, Groq, OpenRouter, or local Ollama. Zero markups, zero middleman servers.
+          </div>
+          <div class="px-provider-chips">
+            <span class="px-chip ${isDeepSeek ? 'active-chip' : ''}">🚀 DeepSeek</span>
+            <span class="px-chip ${isOpenAI ? 'active-chip' : ''}">🟢 OpenAI</span>
+            <span class="px-chip ${isClaude ? 'active-chip' : ''}">🟣 Claude</span>
+            <span class="px-chip ${isGemini ? 'active-chip' : ''}">🔵 Gemini</span>
+            <span class="px-chip ${isGroq ? 'active-chip' : ''}">⚡ Groq</span>
+            <span class="px-chip ${isOpenRouter ? 'active-chip' : ''}">🌐 OpenRouter</span>
+            <span class="px-chip ${isOllama ? 'active-chip' : ''}">💻 Ollama (Free)</span>
+          </div>
+        </div>
+        <div class="px-setup-actions">
+          <button type="button" class="px-setup-btn" id="px-open-settings-action">
+            <span>⚙️ Open PulseX Settings &rarr;</span>
+          </button>
+          <span class="px-setup-tip">Click to choose your provider & enter your key</span>
+        </div>
+      </div>
     `;
   }
 
@@ -1110,10 +1271,25 @@
 
       closeBtn.addEventListener('click', closeDrawer);
 
-      const appendMsg = (role, text) => {
+      const appendMsg = (role, text, isHtml = false) => {
         const msg = document.createElement('div');
         msg.className = `pulsex-msg pulsex-msg-${role}`;
-        msg.textContent = text;
+        if (isHtml) {
+          msg.innerHTML = text;
+          const setupBtn = msg.querySelector('#px-open-settings-action') || msg.querySelector('.px-setup-btn');
+          if (setupBtn) {
+            setupBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (typeof chrome !== 'undefined' && chrome.runtime?.openOptionsPage) {
+                try { chrome.runtime.openOptionsPage(); } catch (err) {}
+              }
+              chrome.runtime.sendMessage({ action: 'OPEN_SETTINGS' });
+            });
+          }
+        } else {
+          msg.textContent = text;
+        }
         chatMessages.appendChild(msg);
         chatMessages.scrollTop = chatMessages.scrollHeight;
       };
@@ -1132,7 +1308,7 @@
 
         const fallbackTimer = setTimeout(() => {
           spinner.remove();
-          appendMsg('assistant', '⚠️ Copilot request timed out (95s). If using deepseek-reasoner, try deepseek-chat in PulseX settings for fast 1s responses.');
+          appendMsg('assistant', '⚠️ Copilot request timed out (95s). The provider may be experiencing high latency. Try switching models or checking settings.');
         }, 95000);
 
         chrome.runtime.sendMessage({
@@ -1152,7 +1328,12 @@
             this.chatHistory.push({ role: 'assistant', content: res.reply });
             appendMsg('assistant', res.reply);
           } else {
-            appendMsg('assistant', `⚠️ ${res?.error || 'Failed to reach DeepSeek API. Check your key in settings.'}`);
+            const isApiKeyMissing = res?.code === 'API_KEY_MISSING' || (res?.error && res.error.toLowerCase().includes('api key not configured'));
+            if (isApiKeyMissing) {
+              appendMsg('assistant', renderApiKeyMissingCard(res?.provider || 'AI Model'), true);
+            } else {
+              appendMsg('assistant', `⚠️ ${res?.error || 'Failed to reach AI provider. Check your settings.'}`);
+            }
           }
         });
       };
@@ -1187,7 +1368,12 @@
             this.chatHistory.push({ role: 'assistant', content: res.reply });
             appendMsg('assistant', `Quote Tweet Draft:\n${res.reply}`);
           } else {
-            appendMsg('assistant', `⚠️ ${res?.error || 'Failed to craft quote tweet'}`);
+            const isApiKeyMissing = res?.code === 'API_KEY_MISSING' || (res?.error && res.error.toLowerCase().includes('api key not configured'));
+            if (isApiKeyMissing) {
+              appendMsg('assistant', renderApiKeyMissingCard(res?.provider || 'AI Model'), true);
+            } else {
+              appendMsg('assistant', `⚠️ ${res?.error || 'Failed to craft quote tweet'}`);
+            }
           }
         });
       };
@@ -1589,10 +1775,13 @@
       const angleBtns = shadow.querySelectorAll('.pulsex-angle-btn');
       const previewBox = shadow.querySelector('.pulsex-preview-box');
       const previewContent = shadow.querySelector('.pulsex-preview-content');
+      const previewTop = shadow.querySelector('.pulsex-preview-top');
       const variantsTabs = shadow.querySelector('.pulsex-variants-tabs');
       const tabBtns = shadow.querySelectorAll('.pulsex-tab-btn');
       const metricsPill = shadow.querySelector('#pulsex-metrics');
+      const toneRow = shadow.querySelector('.pulsex-tone-row');
       const toneBtns = shadow.querySelectorAll('.pulsex-tone-btn');
+      const previewActions = shadow.querySelector('.pulsex-preview-actions');
       const rerollBtn = shadow.querySelector('.pulsex-preview-reroll');
       const discardBtn = shadow.querySelector('.pulsex-preview-discard');
       const insertBtn = shadow.querySelector('.pulsex-preview-insert');
@@ -1640,6 +1829,20 @@
         });
       };
 
+      const attachSetupAction = () => {
+        const setupBtn = shadow.getElementById('px-open-settings-action');
+        if (setupBtn) {
+          setupBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof chrome !== 'undefined' && chrome.runtime?.openOptionsPage) {
+              try { chrome.runtime.openOptionsPage(); } catch (err) {}
+            }
+            chrome.runtime.sendMessage({ action: 'OPEN_SETTINGS' });
+          });
+        }
+      };
+
       const triggerGen = () => {
         const rawThought = rawInput.value.trim();
         const ctx = getActiveContext();
@@ -1668,7 +1871,7 @@
         const fallbackTimer = setTimeout(() => {
           genBtn.innerHTML = '<span>Generate</span>';
           genBtn.disabled = false;
-          previewContent.innerHTML = `<span style="color: #f87171;">⚠️ Request timed out (95s). DeepSeek's servers may be experiencing high latency. Try switching to deepseek-chat in PulseX settings for fast 1s replies.</span>`;
+          previewContent.innerHTML = `<span style="color: #f87171;">⚠️ Request timed out (95s). The provider servers may be experiencing high latency. Try switching models or check your settings.</span>`;
           previewBox.style.display = 'block';
         }, 95000);
 
@@ -1701,13 +1904,28 @@
           if (res && res.success && (res.reply || (res.variations && res.variations.length > 0))) {
             drafts = (res.variations && res.variations.length > 0) ? res.variations : [res.reply];
             activeIndex = 0;
+            if (previewTop) previewTop.style.display = 'flex';
+            if (toneRow) toneRow.style.display = 'flex';
+            if (previewActions) previewActions.style.display = 'flex';
             if (variantsTabs) {
               variantsTabs.style.display = drafts.length > 1 ? 'flex' : 'none';
             }
             renderActiveDraft();
             previewBox.style.display = 'block';
           } else {
-            previewContent.innerHTML = `<span style="color: #f87171;">⚠️ ${res?.error || 'Check DeepSeek API key in PulseX settings.'}</span>`;
+            const isApiKeyMissing = res?.code === 'API_KEY_MISSING' || (res?.error && res.error.toLowerCase().includes('api key not configured'));
+            if (isApiKeyMissing) {
+              previewContent.innerHTML = renderApiKeyMissingCard(res?.provider || 'AI Model');
+              if (previewTop) previewTop.style.display = 'none';
+              if (toneRow) toneRow.style.display = 'none';
+              if (previewActions) previewActions.style.display = 'none';
+              attachSetupAction();
+            } else {
+              previewContent.innerHTML = `<span style="color: #f87171;">⚠️ ${res?.error || 'Check API provider key in PulseX settings.'}</span>`;
+              if (previewTop) previewTop.style.display = 'none';
+              if (toneRow) toneRow.style.display = 'none';
+              if (previewActions) previewActions.style.display = 'flex';
+            }
             previewBox.style.display = 'block';
           }
         });
@@ -1750,6 +1968,15 @@
             if (res && res.success && res.reply) {
               drafts[activeIndex] = res.reply;
               renderActiveDraft();
+            } else {
+              const isApiKeyMissing = res?.code === 'API_KEY_MISSING' || (res?.error && res.error.toLowerCase().includes('api key not configured'));
+              if (isApiKeyMissing) {
+                previewContent.innerHTML = renderApiKeyMissingCard(res?.provider || 'AI Model');
+                if (previewTop) previewTop.style.display = 'none';
+                if (toneRow) toneRow.style.display = 'none';
+                if (previewActions) previewActions.style.display = 'none';
+                attachSetupAction();
+              }
             }
           });
         });

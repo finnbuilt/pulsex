@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import {
   renderInlineBarTemplate,
   renderCopilotDrawerTemplate,
-  getShadowStyles
+  getShadowStyles,
+  renderApiKeyMissingCard
 } from '../extension/content/shadow-templates.js';
 
 test('renderInlineBarTemplate includes 5 angle buttons and raw thoughts input', () => {
@@ -33,4 +34,16 @@ test('getShadowStyles returns valid CSS with obsidian emerald cyber palette', ()
   assert.ok(css.includes('#06b6d4'), 'must include cyan hex');
   assert.ok(css.includes('backdrop-filter'), 'must include glassmorphism blur');
   assert.ok(css.includes('.pulsex-btn'), 'must style pulse buttons');
+});
+
+test('renderApiKeyMissingCard renders beautiful multi-provider setup card with settings action', () => {
+  const card = renderApiKeyMissingCard('DeepSeek');
+  assert.ok(card.includes('px-api-setup-card'), 'must have setup card container');
+  assert.ok(card.includes('Connect AI Provider'), 'must have connect header');
+  assert.ok(card.includes('px-setup-pill'), 'must include provider pill');
+  assert.ok(card.includes('DeepSeek &bull; BYOK'), 'must show provider name and BYOK');
+  assert.ok(card.includes('px-provider-chips'), 'must display multi-provider chips');
+  assert.ok(card.includes('active-chip'), 'must highlight active provider chip');
+  assert.ok(card.includes('Open PulseX Settings'), 'must have open settings action button');
+  assert.ok(card.includes('px-open-settings-action'), 'must have settings button id');
 });

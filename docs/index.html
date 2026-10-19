@@ -469,168 +469,462 @@
     .slop .comparison-tells { color: #fda4af; }
     .pulsex .comparison-tells { color: #a7f3d0; }
 
-    /* Interactive Live Twitter Simulator */
-    .simulator-section {
-      padding: 50px 0 80px;
-    }
-    .simulator-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-emerald);
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65), 0 0 30px rgba(16, 185, 129, 0.14);
+    /* Cyber Showcase Section (Refined to match Dappback reference) */
+    .cyber-showcase-section {
+      padding: 70px 0 100px;
+      position: relative;
       overflow: hidden;
-      max-width: 900px;
-      margin: 0 auto;
+      background: radial-gradient(circle at 50% 40%, rgba(26, 38, 64, 0.45) 0%, rgba(6, 9, 15, 0.98) 75%);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
     }
-    .sim-topbar {
+
+    /* Massive Typographic Watermarks */
+    .cyber-watermark-bg {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(90px, 17vw, 230px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.04);
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+      white-space: nowrap;
+      text-transform: uppercase;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .cyber-stage {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 620px;
+    }
+
+    .cyber-side-text-left {
+      position: absolute;
+      left: 20px;
+      bottom: 50px;
+      max-width: 270px;
+      font-size: 13px;
+      color: rgba(226, 232, 240, 0.55);
+      line-height: 1.6;
+      z-index: 2;
+      text-align: left;
+    }
+    .cyber-chrome-ext-badge {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #38bdf8;
+      text-transform: uppercase;
+      text-shadow: 0 0 25px rgba(56, 189, 248, 0.6);
+      margin-bottom: 10px;
+      display: block;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .cyber-side-text-right {
+      position: absolute;
+      right: 20px;
+      bottom: 110px;
+      max-width: 230px;
+      font-size: 13.5px;
+      color: rgba(226, 232, 240, 0.6);
+      line-height: 1.5;
+      text-align: right;
+      z-index: 2;
+    }
+
+    .cyber-slashes {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 32px;
+      font-weight: 700;
+      color: rgba(56, 189, 248, 0.35);
+      letter-spacing: 4px;
+      font-family: var(--font-mono);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* The Cyber Extension Modal Card */
+    .cyber-modal {
+      width: 420px;
+      max-width: 100%;
+      background: #0d121c;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 28px;
+      padding: 24px 22px 30px;
+      box-shadow:
+        0 30px 100px rgba(0, 0, 0, 0.9),
+        0 0 60px rgba(56, 189, 248, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Modal Top Bar */
+    .cyber-modal-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 20px;
-      background: rgba(13, 20, 31, 0.8);
-      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 18px;
     }
-    .sim-dots {
+    .cyber-modal-brand {
       display: flex;
-      gap: 6px;
+      align-items: center;
+      gap: 10px;
     }
-    .sim-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-    .sim-dot.red { background: #ef4444; }
-    .sim-dot.yellow { background: #f59e0b; }
-    .sim-dot.green { background: #10b981; }
-
-    .sim-status {
-      font-size: 12px;
-      color: var(--text-dim);
-      font-family: var(--font-mono);
-    }
-    .sim-body {
-      padding: 28px;
-    }
-
-    .sim-tweet {
-      display: flex;
-      gap: 14px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border-subtle);
-      margin-bottom: 22px;
-    }
-    .sim-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #1e293b, #0f172a);
-      border: 1px solid var(--border-subtle);
+    .cyber-logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.3);
+    }
+    .cyber-modal-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.3px;
+    }
+    .cyber-modal-sub {
+      font-size: 10.5px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+    .cyber-modal-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cyber-icon-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 16px;
+      cursor: pointer;
+      transition: color 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cyber-icon-btn:hover { color: #fff; }
+
+    /* Upper Target / Profile Card (Nike style) */
+    .cyber-target-card {
+      background: rgba(18, 24, 38, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+    .cyber-target-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cyber-target-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
       flex-shrink: 0;
     }
-    .sim-tweet-author {
+    .cyber-target-name {
+      font-size: 14.5px;
       font-weight: 700;
       color: #fff;
-      font-size: 14.5px;
     }
-    .sim-tweet-handle {
+    .cyber-target-sub {
+      font-size: 11.5px;
       color: var(--text-dim);
-      font-size: 13px;
-      margin-left: 6px;
     }
-    .sim-tweet-text {
-      color: #e2e8f0;
-      font-size: 15px;
-      margin-top: 6px;
-      line-height: 1.5;
+    .cyber-follow-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+    .cyber-follow-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
     }
 
-    /* Embedded PulseX Bar */
-    .sim-pulsex-bar {
-      background: rgba(11, 16, 25, 0.96);
-      border: 1px solid var(--border-emerald);
-      border-radius: 14px;
-      padding: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    /* Electric Cyan Glow Notch on bottom right of target card */
+    .cyber-target-card::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      right: 18px;
+      width: 48px;
+      height: 3.5px;
+      background: #38bdf8;
+      box-shadow: 0 0 14px #38bdf8, 0 0 24px #38bdf8;
+      border-radius: 3px;
     }
-    .sim-bar-header {
+
+    /* Sub-section Header */
+    .cyber-sub-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+    .cyber-sub-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .cyber-sub-counter {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cyber-sub-counter span.count {
+      color: #fff;
+    }
+
+    /* Main Beveled Cyber Card */
+    .cyber-main-card {
+      background: #101522;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 20px;
+      padding: 20px 18px 22px;
+      position: relative;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      margin-bottom: 14px;
+    }
+
+    /* Left Edge Glowing Violet Accent Bar */
+    .cyber-main-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 36%;
+      width: 4.5px;
+      height: 42px;
+      background: #8b5cf6;
+      box-shadow: 0 0 14px #8b5cf6, 0 0 26px rgba(139, 92, 246, 0.6);
+      border-radius: 0 3px 3px 0;
+    }
+
+    .cyber-main-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 12px;
     }
-    .sim-brand {
+    .cyber-source-chip {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-weight: 800;
-      font-size: 13.5px;
+      gap: 6px;
+      font-size: 11.5px;
+      color: var(--text-dim);
     }
-    .sim-by-author {
-      font-size: 10.5px;
-      color: var(--emerald-light);
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      padding: 2px 8px;
-      border-radius: 10px;
-      text-decoration: none;
-    }
-    .sim-angles {
+    .cyber-badge-save {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 11.5px;
+      color: #e2e8f0;
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .cyber-badge-save:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .cyber-headline {
+      font-size: 15.5px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+      letter-spacing: -0.2px;
+    }
+    .cyber-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
       margin-bottom: 14px;
     }
-    .sim-angle-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
+
+    /* Reply Text Showcase Box */
+    .cyber-reply-text-box {
+      background: rgba(7, 10, 17, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 13.5px;
+      color: #f1f5f9;
+      line-height: 1.55;
+      margin-bottom: 14px;
+      min-height: 64px;
+      transition: opacity 0.15s ease;
+    }
+
+    /* Floating Social Proof Capsule (like "bought 5 items 1 min ago") */
+    .cyber-social-capsule {
+      background: linear-gradient(90deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.5));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
       padding: 6px 12px;
-      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      color: #cbd5e1;
+      margin-bottom: 18px;
+    }
+    .cyber-capsule-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+    }
+
+    /* Bottom Action Row with Iridescent Activate Button */
+    .cyber-card-action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .cyber-value-tag {
+      font-size: 18px;
+      font-weight: 900;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: -0.5px;
+    }
+    .cyber-value-tag span.unit {
+      font-size: 11px;
+      color: var(--emerald-light);
+      font-weight: 600;
+      letter-spacing: 0;
+      font-family: var(--font-mono);
+    }
+
+    /* The Iridescent Activate Button from the reference image */
+    .cyber-activate-btn {
+      background: linear-gradient(135deg, #c7d2fe 0%, #e0e7ff 45%, #fef08a 100%);
+      color: #0b0f19;
+      font-weight: 800;
+      font-size: 13.5px;
+      padding: 10px 24px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(199, 210, 254, 0.45);
+      transition: transform 0.18s, box-shadow 0.18s;
+      white-space: nowrap;
+    }
+    .cyber-activate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 26px rgba(199, 210, 254, 0.65);
+    }
+    .cyber-activate-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Bottom Beveled Overlapping Notch ("More tasks +") */
+    .cyber-bottom-notch {
+      position: absolute;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #141b2a;
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: 10px;
+      padding: 6px 18px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #c4b5fd;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+    .cyber-bottom-notch:hover {
+      border-color: #8b5cf6;
+      background: #1c2438;
+      color: #fff;
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+    }
+
+    /* Angle Selector Tabs below the card */
+    .cyber-angle-pills-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 3;
+    }
+    .cyber-angle-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      border-radius: 20px;
+      padding: 6px 14px;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s;
     }
-    .sim-angle-btn:hover, .sim-angle-btn.active {
-      background: rgba(16, 185, 129, 0.22);
-      border-color: var(--emerald);
+    .cyber-angle-pill:hover, .cyber-angle-pill.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
       color: #fff;
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
-    }
-
-    .sim-output-box {
-      background: rgba(0, 0, 0, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 16px;
-      min-height: 68px;
-      font-size: 14.5px;
-      color: #f8fafc;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      transition: opacity 0.15s;
-    }
-    .sim-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .sim-model-selector {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11.5px;
-      font-family: var(--font-mono);
-      color: var(--emerald);
-      background: rgba(16, 185, 129, 0.1);
-      padding: 4px 10px;
-      border-radius: 6px;
-      border: 1px solid rgba(16, 185, 129, 0.25);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
     }
 
     /* Providers Grid */
@@ -1069,6 +1363,11 @@
       .creator-banner { flex-direction: column; text-align: center; }
       .creator-left { flex-direction: column; }
       .download-box-wrapper { padding: 24px 18px; }
+      .cyber-side-text-left, .cyber-side-text-right, .cyber-slashes { display: none; }
+      .cyber-watermark-bg { font-size: 80px; top: 5%; }
+      .cyber-modal { width: 100%; padding: 18px 14px 24px; }
+      .cyber-card-action-row { flex-direction: column; align-items: stretch; }
+      .cyber-activate-btn { text-align: center; width: 100%; }
     }
   </style>
 </head>
@@ -1253,79 +1552,153 @@
     </div>
   </section>
 
-  <!-- Interactive Live Twitter Simulator -->
-  <section class="simulator-section" id="demo">
+  <!-- Cyber Extension Showcase (Refined to match Dappback reference) -->
+  <section class="cyber-showcase-section" id="demo">
+    <!-- Massive Typographic Watermark Background -->
+    <div class="cyber-watermark-bg">PULSEX</div>
+
     <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Interactive Simulation</div>
+      <div class="section-header" style="position: relative; z-index: 2; margin-bottom: 30px;">
+        <div class="section-tag">Interactive Extension Showcase</div>
         <h2 class="section-title">Experience PulseX in Action</h2>
-        <p class="section-desc">Click any angle below to see real-time, context-aware drafts generated for this tweet.</p>
+        <p class="section-desc">Experience the exact Chrome extension interface. Select any angle or model to generate authentic replies in real time.</p>
       </div>
 
-      <div class="simulator-card">
-        <div class="sim-topbar">
-          <div class="sim-dots">
-            <span class="sim-dot red"></span>
-            <span class="sim-dot yellow"></span>
-            <span class="sim-dot green"></span>
-          </div>
-          <div class="sim-status">x.com/status &bull; PulseX In-Timeline Toolbar Active</div>
-          <div style="font-size: 11px; color: var(--emerald); font-family: var(--font-mono);">BYOK Engine Ready</div>
+      <div class="cyber-stage">
+        <!-- Background Left Copy & Chrome Extension Callout (like image reference) -->
+        <div class="cyber-side-text-left">
+          <span class="cyber-chrome-ext-badge">CHROME<br>EXTENSION</span>
+          <p>
+            Seamlessly activate context-aware replies, eliminate timeline noise, and write with zero em-dashes. Start generating authentic peer cadence directly inside X!
+          </p>
         </div>
 
-        <div class="sim-body">
-          <!-- Active Tweet -->
-          <div class="sim-tweet">
-            <div class="sim-avatar">🚀</div>
-            <div>
-              <span class="sim-tweet-author">SaaS Founder</span>
-              <span class="sim-tweet-handle">@techfounder &bull; 3h</span>
-              <p class="sim-tweet-text">
-                "The biggest mistake early stage founders make is obsessing over paid ads before reaching organic word of mouth. If people won't share it for free, ads won't save you."
-              </p>
+        <!-- The Floating Cyber Extension Window (Exact design from reference image) -->
+        <div class="cyber-modal">
+          <!-- Modal Top Bar -->
+          <div class="cyber-modal-header">
+            <div class="cyber-modal-brand">
+              <div class="cyber-logo-icon">
+                <svg width="18" height="18" viewBox="0 0 32 32" fill="none">
+                  <path d="M4 16h6l3-6 4 12 3-8 3 5 5-3" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <div class="cyber-modal-title">Pulse<span style="color: var(--emerald);">X</span></div>
+                <div class="cyber-modal-sub">by @finnbuilt</div>
+              </div>
+            </div>
+            <div class="cyber-modal-controls">
+              <button type="button" class="cyber-icon-btn" title="Settings">⚙️</button>
+              <button type="button" class="cyber-icon-btn" title="Close">✕</button>
             </div>
           </div>
 
-          <!-- PulseX Embedded Bar -->
-          <div class="sim-pulsex-bar">
-            <div class="sim-bar-header">
-              <div class="sim-brand">
-                <span style="color: var(--emerald);">⚡ PulseX Reply</span>
-                <a href="https://x.com/finnbuilt" target="_blank" rel="noreferrer" class="sim-by-author">by @finnbuilt</a>
+          <!-- Upper Target Profile Card (Nike-style card with cyan glow notch) -->
+          <div class="cyber-target-card">
+            <div class="cyber-target-left">
+              <div class="cyber-target-avatar">
+                <!-- X / Twitter Bird Icon in Black on White -->
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#000">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
               </div>
-              <span style="font-size: 11px; color: var(--text-dim);">Select strategic angle:</span>
+              <div>
+                <div class="cyber-target-name">SaaS Founder</div>
+                <div class="cyber-target-sub">20.5k followers &bull; @techfounder</div>
+              </div>
+            </div>
+            <button type="button" class="cyber-follow-btn">
+              <span>Replying</span>
+              <span style="color: var(--emerald-light); font-size: 15px;">+</span>
+            </button>
+          </div>
+
+          <!-- Sub-section Header -->
+          <div class="cyber-sub-row">
+            <span class="cyber-sub-title">Strategic Angles</span>
+            <div class="cyber-sub-counter">
+              <span class="count" id="cyber-counter-display">5/5</span>
+              <span>⚡ Active</span>
+            </div>
+          </div>
+
+          <!-- Main Beveled Cyber Card (Nike 20% style) -->
+          <div class="cyber-main-card">
+            <div class="cyber-main-top">
+              <div class="cyber-source-chip">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                <span>Thread context</span>
+              </div>
+              <div class="cyber-badge-save" id="cyber-angle-badge">
+                <span>💡 Insight</span>
+              </div>
             </div>
 
-            <!-- Angles -->
-            <div class="sim-angles">
-              <button class="sim-angle-btn active" data-angle="insight">💡 Insight</button>
-              <button class="sim-angle-btn" data-angle="agree">🤝 Agree & Expand</button>
-              <button class="sim-angle-btn" data-angle="counter">⚡ Counter Angle</button>
-              <button class="sim-angle-btn" data-angle="witty">🎯 Witty</button>
-              <button class="sim-angle-btn" data-angle="question">❓ Question</button>
-            </div>
+            <div class="cyber-headline">Zero Em-Dash Cadence &bull; 100% Peer Substance</div>
+            <div class="cyber-desc">Grounded in the author's tweet about acquisition and retention loops.</div>
 
-            <!-- Output Preview -->
-            <div class="sim-output-box" id="sim-output">
+            <!-- Dynamic Reply Text Box -->
+            <div class="cyber-reply-text-box" id="cyber-reply-text">
               100%. Ads amplify whatever you already have. If you have zero organic retention, you're literally paying to churn users faster.
             </div>
 
-            <div class="sim-actions">
-              <div class="sim-model-selector" id="sim-model-tag">
-                <span>⚡ Model:</span>
-                <select id="sim-model-choice" style="background: none; border: none; color: var(--emerald-light); font-size: 11.5px; font-family: var(--font-mono); outline: none; cursor: pointer;">
-                  <option value="deepseek-chat" style="background: #0b1119; color: #fff;">deepseek-chat (V3)</option>
-                  <option value="deepseek-reasoner" style="background: #0b1119; color: #fff;">deepseek-reasoner (R1)</option>
-                  <option value="gpt-4o" style="background: #0b1119; color: #fff;">gpt-4o</option>
-                  <option value="claude-3-5" style="background: #0b1119; color: #fff;">claude-3-5-sonnet</option>
-                  <option value="gemini-flash" style="background: #0b1119; color: #fff;">gemini-2.0-flash</option>
-                </select>
+            <!-- Floating Social Proof Capsule -->
+            <div class="cyber-social-capsule">
+              <span class="cyber-capsule-dot"></span>
+              <span id="cyber-capsule-text">⚡ 18w &bull; 112/280 chars &bull; 180ms latency</span>
+            </div>
+
+            <!-- Bottom Action Row with Iridescent Activate Button -->
+            <div class="cyber-card-action-row">
+              <div class="cyber-value-tag">
+                <span id="cyber-model-label">R1</span>
+                <span class="unit">Reasoner ⚡</span>
               </div>
-              <button class="btn btn-primary" id="sim-copy-btn" style="padding: 6px 14px; font-size: 12px;">
-                <span>Insert into Tweet</span>
+              <button type="button" class="cyber-activate-btn" id="cyber-activate-btn">
+                <span>Activate Reply 🚀</span>
               </button>
             </div>
           </div>
+
+          <!-- Bottom Overlapping Tab Notch ("More tasks +" in image) -->
+          <div class="cyber-bottom-notch" id="cyber-next-angle-btn">
+            <span>Cycle Angle</span>
+            <span style="font-size: 14px; font-weight: 800;">+</span>
+          </div>
+        </div>
+
+        <!-- Right Side Callout Text (like image reference) -->
+        <div class="cyber-side-text-right">
+          <p>
+            Unlock high-signal replies on X when you activate PulseX.
+          </p>
+        </div>
+
+        <!-- Center Cyber Slashes (like image reference) -->
+        <div class="cyber-slashes">//</div>
+      </div>
+
+      <!-- Quick Angle Switcher & Model Cascader -->
+      <div class="cyber-angle-pills-row">
+        <span style="font-size: 12px; color: var(--text-dim); margin-right: 6px;">Select Angle:</span>
+        <button type="button" class="cyber-angle-pill active" data-angle="insight">💡 Insight</button>
+        <button type="button" class="cyber-angle-pill" data-angle="agree">🤝 Agree & Expand</button>
+        <button type="button" class="cyber-angle-pill" data-angle="counter">⚡ Counter Angle</button>
+        <button type="button" class="cyber-angle-pill" data-angle="witty">🎯 Witty</button>
+        <button type="button" class="cyber-angle-pill" data-angle="question">❓ Question</button>
+
+        <div style="margin-left: 12px; display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.05); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1);">
+          <span style="font-size: 11px; color: var(--emerald-light); font-family: var(--font-mono);">Model:</span>
+          <select id="cyber-model-select" style="background: none; border: none; color: #fff; font-size: 11.5px; font-family: var(--font-mono); outline: none; cursor: pointer;">
+            <option value="deepseek-reasoner" style="background: #0d121c; color: #fff;">DeepSeek R1 Reasoner</option>
+            <option value="deepseek-chat" style="background: #0d121c; color: #fff;">DeepSeek V3 Chat</option>
+            <option value="gpt-4o" style="background: #0d121c; color: #fff;">OpenAI GPT-4o</option>
+            <option value="claude-3-5" style="background: #0d121c; color: #fff;">Claude 3.5 Sonnet</option>
+            <option value="gemini-flash" style="background: #0d121c; color: #fff;">Gemini 2.0 Flash</option>
+          </select>
         </div>
       </div>
     </div>
@@ -1794,36 +2167,101 @@
   </footer>
 
   <script>
-    // Sample interactive replies for the demo
-    const sampleReplies = {
-      insight: "100%. Ads amplify whatever you already have. If you have zero organic retention, you're literally paying to churn users faster.",
-      agree: "spot on. Paid acquisition before retention is just pouring water into a leaky bucket. Fix the product loop first.",
-      counter: "depends on the business model tbh. B2B enterprise often uses paid search early on purely to validate customer pain points and pricing.",
-      witty: "Paid ads before PMF is just a very expensive way to find out nobody wanted your app anyway lol.",
-      question: "curious at what retention benchmark you consider a product ready for paid acquisition? 40% month 1?"
+    // Cyber Showcase Interactive Simulation (Reference Image Design)
+    const cyberReplies = {
+      insight: {
+        badge: "💡 Insight",
+        text: "100%. Ads amplify whatever you already have. If you have zero organic retention, you're literally paying to churn users faster.",
+        metrics: "⚡ 18w · 112/280 chars · 180ms latency"
+      },
+      agree: {
+        badge: "🤝 Agree & Expand",
+        text: "spot on. Paid acquisition before retention is just pouring water into a leaky bucket. Fix the product loop first.",
+        metrics: "⚡ 16w · 98/280 chars · 165ms latency"
+      },
+      counter: {
+        badge: "⚡ Counter Angle",
+        text: "depends on the business model tbh. B2B enterprise often uses paid search early on purely to validate customer pain points and pricing.",
+        metrics: "⚡ 21w · 134/280 chars · 210ms latency"
+      },
+      witty: {
+        badge: "🎯 Witty",
+        text: "Paid ads before PMF is just a very expensive way to find out nobody wanted your app anyway lol.",
+        metrics: "⚡ 17w · 95/280 chars · 140ms latency"
+      },
+      question: {
+        badge: "❓ Question",
+        text: "curious at what retention benchmark you consider a product ready for paid acquisition? 40% month 1?",
+        metrics: "⚡ 14w · 89/280 chars · 150ms latency"
+      }
     };
 
-    const angleButtons = document.querySelectorAll('.sim-angle-btn');
-    const simOutput = document.getElementById('sim-output');
-    const copyBtn = document.getElementById('sim-copy-btn');
+    const angleOrder = ['insight', 'agree', 'counter', 'witty', 'question'];
+    let currentAngleIndex = 0;
 
-    angleButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        angleButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const angle = btn.dataset.angle;
-        simOutput.style.opacity = '0.35';
+    const cyberPills = document.querySelectorAll('.cyber-angle-pill');
+    const cyberReplyText = document.getElementById('cyber-reply-text');
+    const cyberAngleBadge = document.getElementById('cyber-angle-badge');
+    const cyberCapsuleText = document.getElementById('cyber-capsule-text');
+    const cyberActivateBtn = document.getElementById('cyber-activate-btn');
+    const cyberNextAngleBtn = document.getElementById('cyber-next-angle-btn');
+    const cyberModelSelect = document.getElementById('cyber-model-select');
+    const cyberModelLabel = document.getElementById('cyber-model-label');
+
+    function applyAngle(angleKey) {
+      const data = cyberReplies[angleKey] || cyberReplies.insight;
+      currentAngleIndex = angleOrder.indexOf(angleKey);
+
+      cyberPills.forEach(p => {
+        p.classList.toggle('active', p.dataset.angle === angleKey);
+      });
+
+      if (cyberReplyText) {
+        cyberReplyText.style.opacity = '0.3';
         setTimeout(() => {
-          simOutput.textContent = sampleReplies[angle] || sampleReplies.insight;
-          simOutput.style.opacity = '1';
-        }, 120);
+          cyberReplyText.textContent = data.text;
+          cyberReplyText.style.opacity = '1';
+        }, 110);
+      }
+      if (cyberAngleBadge) cyberAngleBadge.innerHTML = `<span>${data.badge}</span>`;
+      if (cyberCapsuleText) cyberCapsuleText.textContent = data.metrics;
+    }
+
+    cyberPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        applyAngle(pill.dataset.angle);
       });
     });
 
-    copyBtn.addEventListener('click', () => {
-      copyBtn.textContent = '✅ Inserted into Composer!';
-      setTimeout(() => { copyBtn.textContent = 'Insert into Tweet'; }, 1800);
-    });
+    if (cyberNextAngleBtn) {
+      cyberNextAngleBtn.addEventListener('click', () => {
+        currentAngleIndex = (currentAngleIndex + 1) % angleOrder.length;
+        applyAngle(angleOrder[currentAngleIndex]);
+      });
+    }
+
+    if (cyberActivateBtn) {
+      cyberActivateBtn.addEventListener('click', () => {
+        const prevText = cyberActivateBtn.innerHTML;
+        cyberActivateBtn.innerHTML = '<span>Activated in Composer! ✅</span>';
+        cyberActivateBtn.style.transform = 'scale(0.97)';
+        setTimeout(() => {
+          cyberActivateBtn.innerHTML = prevText;
+          cyberActivateBtn.style.transform = '';
+        }, 1800);
+      });
+    }
+
+    if (cyberModelSelect && cyberModelLabel) {
+      cyberModelSelect.addEventListener('change', () => {
+        const val = cyberModelSelect.value;
+        if (val.includes('reasoner')) cyberModelLabel.textContent = 'R1';
+        else if (val.includes('chat')) cyberModelLabel.textContent = 'V3';
+        else if (val.includes('gpt')) cyberModelLabel.textContent = '4o';
+        else if (val.includes('claude')) cyberModelLabel.textContent = '3.5';
+        else if (val.includes('gemini')) cyberModelLabel.textContent = '2.0';
+      });
+    }
 
     // FAQ Accordion
     document.querySelectorAll('.faq-q').forEach(q => {

@@ -1,0 +1,4 @@
+node_modules/
+detected_spec.json
+.DS_Store
+Thumbs.db

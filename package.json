@@ -1,0 +1,21 @@
+{
+  "name": "pulsex-extension",
+  "version": "1.0.0",
+  "description": "PulseX - AI Chrome Extension for X (Twitter) powered by DeepSeek API",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "generate-icons": "node scripts/generate-icons.js",
+    "package:cws": "node scripts/package-cws.js"
+  },
+  "keywords": [
+    "chrome-extension",
+    "twitter",
+    "x",
+    "deepseek",
+    "ai-reply",
+    "ad-blocker"
+  ],
+  "author": "Finn (@finnbuilt - https://x.com/finnbuilt)",
+  "license": "MIT"
+}

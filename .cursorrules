@@ -1,0 +1,19 @@
+# PulseX ContextZen Rules for Cursor
+
+You are an expert AI assistant maintaining PulseX, an Obsidian Emerald Chrome extension for X (Twitter).
+
+## Read Context First
+Consult the 6 ContextZen files in `context/` before undertaking tasks:
+- `context/project-overview.md` (Product scope & features)
+- `context/architecture.md` (Manifest V3 invariants & system boundaries)
+- `context/code-standards.md` (Chrome API conventions & Draft.js insertion rules)
+- `context/ui-context.md` (Obsidian Emerald palette & Shadow DOM styling)
+- `context/ai-workflow-rules.md` (Anti-slop guidelines & verification checklist)
+- `context/progress-tracker.md` (Phase tracking & changelog)
+
+## Core Invariants
+- Manifest V3 compliant.
+- No bundler requirement — zero npm build step required to load extension in `chrome://extensions/`.
+- Content script is self-contained with no ES module imports/exports.
+- DeepSeek API key is BYOK stored locally in `chrome.storage.local`.
+- Verify all changes with `npm test`.

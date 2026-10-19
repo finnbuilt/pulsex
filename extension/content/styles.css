@@ -1,0 +1,27 @@
+/* Global page styles injected on x.com for PulseX */
+
+/* Ad & Noise Filter hidden animation */
+.pulsex-ad-hidden {
+  display: none !important;
+}
+
+.pulsex-ad-collapsed {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  overflow: hidden !important;
+  transition: all 0.25s ease-out !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Shadow Root Host Containers */
+#pulsex-copilot-container {
+  position: static;
+  z-index: 999990;
+}
+
+.pulsex-inline-container {
+  width: 100%;
+  display: block;
+  z-index: 10;
+}

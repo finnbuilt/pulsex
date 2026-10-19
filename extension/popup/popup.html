@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseX Settings</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="px-container">
+    <!-- Cyber Header -->
+    <header class="px-header">
+      <div class="px-brand">
+        <div class="px-brand-icon">
+          <img src="../icons/icon48.png" alt="PulseX" width="28" height="28">
+        </div>
+        <div>
+          <h1 class="px-title">Pulse<span class="px-emerald">X</span></h1>
+          <p class="px-subtitle">Universal AI for X &bull; BYOK</p>
+        </div>
+      </div>
+      <div class="px-status-pill" id="px-connection-status">
+        <span class="px-dot"></span>
+        <span id="px-status-text">Not Tested</span>
+      </div>
+    </header>
+
+    <!-- Live Stats Analytics Bar -->
+    <div class="px-stats-grid" id="px-stats-grid">
+      <div class="px-stat-card">
+        <span class="px-stat-icon">🔥</span>
+        <div class="px-stat-info">
+          <span class="px-stat-val" id="px-stat-replies">0</span>
+          <span class="px-stat-lbl">Replies Crafted</span>
+        </div>
+      </div>
+      <div class="px-stat-card">
+        <span class="px-stat-icon">🛡️</span>
+        <div class="px-stat-info">
+          <span class="px-stat-val" id="px-stat-ads">0</span>
+          <span class="px-stat-lbl">Ads Shielded</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Settings Form -->
+    <main class="px-main">
+      <!-- AI Provider Selection (BYOK) -->
+      <div class="px-field-group">
+        <div class="px-label-row">
+          <label for="px-provider-select" class="px-label">AI Provider</label>
+          <span class="px-provider-badge" id="px-provider-badge">BYOK</span>
+        </div>
+        <select id="px-provider-select" class="px-select">
+          <option value="deepseek" selected>🚀 DeepSeek (V3 & R1)</option>
+          <option value="openai">🟢 OpenAI (GPT-4o, o3-mini)</option>
+          <option value="anthropic">🟣 Anthropic Claude (Sonnet 3.5, Haiku)</option>
+          <option value="gemini">🔵 Google Gemini (2.0 Flash, 1.5 Pro)</option>
+          <option value="groq">⚡ Groq (Llama 3.3 70B - Ultra Fast)</option>
+          <option value="openrouter">🌐 OpenRouter (Universal AI Gateway)</option>
+          <option value="custom">💻 Custom / Local (Ollama, LM Studio)</option>
+        </select>
+      </div>
+
+      <!-- Custom Endpoint URL (for Custom / Ollama) -->
+      <div class="px-field-group" id="px-custom-endpoint-group" style="display: none;">
+        <label for="px-custom-endpoint" class="px-label">API Endpoint URL</label>
+        <input type="text" id="px-custom-endpoint" class="px-input" placeholder="http://localhost:11434/v1/chat/completions" spellcheck="false" />
+      </div>
+
+      <!-- API Key Field -->
+      <div class="px-field-group" id="px-api-key-group">
+        <div class="px-label-row">
+          <label for="px-api-key" class="px-label" id="px-api-key-label">DeepSeek API Key</label>
+          <a href="https://platform.deepseek.com/api_keys" target="_blank" class="px-link" id="px-api-key-link" rel="noreferrer">Get Key ↗</a>
+        </div>
+        <div class="px-input-wrapper">
+          <input type="password" id="px-api-key" placeholder="sk-..." autocomplete="off" spellcheck="false" />
+          <button type="button" id="px-toggle-key-visibility" class="px-icon-btn" title="Toggle visibility">👁️</button>
+        </div>
+        <div class="px-action-row">
+          <button type="button" id="px-test-connection-btn" class="px-btn px-btn-secondary">
+            <span>⚡ Test Connection</span>
+          </button>
+          <span class="px-latency-pill" id="px-latency-pill" style="display: none;"></span>
+        </div>
+      </div>
+
+      <!-- Model Selection -->
+      <div class="px-field-group">
+        <label for="px-model-select" class="px-label">AI Model</label>
+        <select id="px-model-select" class="px-select">
+          <option value="deepseek-chat" selected>deepseek-chat (V3 - Fast & Conversational)</option>
+          <option value="deepseek-reasoner">deepseek-reasoner (R1 - Deep Thinking & Nuance)</option>
+        </select>
+      </div>
+
+      <!-- Custom Model Name Field (when Custom Model is selected) -->
+      <div class="px-field-group" id="px-custom-model-group" style="display: none;">
+        <label for="px-custom-model" class="px-label">Model Identifier</label>
+        <input type="text" id="px-custom-model" class="px-input" placeholder="e.g. llama3.2, mistral-large" spellcheck="false" />
+      </div>
+
+      <!-- Reply Length Target -->
+      <div class="px-field-group">
+        <label for="px-length-select" class="px-label">Reply Length Target</label>
+        <select id="px-length-select" class="px-select">
+          <option value="short">Short & Punchy (&lt;15 words)</option>
+          <option value="standard" selected>Standard Conversational (&lt;30 words)</option>
+          <option value="detailed">Detailed & Analytical (&lt;50 words)</option>
+        </select>
+      </div>
+
+      <!-- Persona Preset Selector -->
+      <div class="px-field-group">
+        <label for="px-persona-preset-select" class="px-label">Persona Preset</label>
+        <select id="px-persona-preset-select" class="px-select">
+          <option value="tech_founder" selected>Pragmatic Tech Founder (Speed, lean, authentic)</option>
+          <option value="growth_marketer">Growth Marketer (Data-driven, high signal)</option>
+          <option value="deep_thinker">Deep Thinker (First-principles, nuance)</option>
+          <option value="contrarian">Sharp Contrarian (Challenges assumptions)</option>
+          <option value="supportive">Warm Peer Builder (Validating, encouraging)</option>
+          <option value="custom">Custom Persona</option>
+        </select>
+      </div>
+
+      <!-- Persona / Tone Customizer -->
+      <div class="px-field-group">
+        <label for="px-persona-input" class="px-label">Custom Tone Instructions</label>
+        <textarea id="px-persona-input" class="px-textarea" placeholder="e.g. Sharp tech founder, authentic, zero fluff, concise, no hashtags."></textarea>
+      </div>
+
+      <!-- Feed Noise & Ad Filter Toggle -->
+      <div class="px-field-group px-toggle-row">
+        <div>
+          <div class="px-toggle-title">Feed Noise & Ad Filter</div>
+          <div class="px-toggle-desc">Auto-hide promoted tweets and repetitive spam</div>
+        </div>
+        <label class="px-switch">
+          <input type="checkbox" id="px-ad-filter-toggle" checked>
+          <span class="px-slider"></span>
+        </label>
+      </div>
+    </main>
+
+    <!-- Footer Actions & Credits -->
+    <footer class="px-footer">
+      <div id="px-toast" class="px-toast"></div>
+      <button type="button" id="px-save-settings-btn" class="px-btn px-btn-primary">
+        <span>Save Settings</span>
+      </button>
+      <div class="px-credits">
+        Built by <a href="https://x.com/finnbuilt" target="_blank" rel="noreferrer" class="px-credit-link">Finn (@finnbuilt) ↗</a>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

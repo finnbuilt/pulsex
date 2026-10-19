@@ -1367,19 +1367,370 @@
       line-height: 1.5;
     }
 
+    /* Mobile Navigation Drawer Styles */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .mobile-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      padding: 0;
+      transition: var(--transition-smooth);
+    }
+    .mobile-toggle:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .mobile-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #e2e8f0;
+      border-radius: 2px;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-toggle.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+      background: var(--emerald);
+    }
+    .mobile-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .mobile-toggle.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+      background: var(--emerald);
+    }
+
+    .mobile-nav-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .mobile-nav-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-nav-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 320px;
+      max-width: 86vw;
+      background: rgba(9, 11, 17, 0.98);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 999;
+      transform: translateX(100%);
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: -15px 0 50px rgba(0, 0, 0, 0.85);
+      overflow-y: auto;
+    }
+    .mobile-nav-drawer.open {
+      transform: translateX(0);
+    }
+    .mobile-nav-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .mobile-nav-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .mobile-nav-close:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .mobile-nav-links {
+      display: flex;
+      flex-direction: column;
+      padding: 16px 14px;
+      gap: 4px;
+      flex: 1;
+    }
+    .mobile-nav-link {
+      padding: 11px 14px;
+      color: var(--text-main);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .mobile-nav-link:hover, .mobile-nav-link:active {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--emerald-light);
+    }
+    .mobile-nav-footer {
+      padding: 16px 18px 24px;
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(5, 8, 14, 0.7);
+    }
+
+    /* Breakpoint 1024px: Tablets & Small Laptops */
+    @media (max-width: 1024px) {
+      .cyber-side-text-left,
+      .cyber-side-text-right,
+      .cyber-slashes {
+        display: none !important;
+      }
+      .cyber-stage {
+        min-height: auto;
+        padding: 10px 0;
+      }
+      .cyber-modal {
+        margin: 0 auto;
+      }
+      .container {
+        padding: 0 20px;
+      }
+      .hero-title {
+        font-size: 46px;
+        letter-spacing: -1.3px;
+      }
+    }
+
+    /* Breakpoint 768px: Mobile & Small Tablets */
     @media (max-width: 768px) {
-      .hero-title { font-size: 38px; letter-spacing: -1px; }
-      .nav-links { display: none; }
-      .comparison-grid { grid-template-columns: 1fr; }
-      .email-form { flex-direction: column; }
-      .creator-banner { flex-direction: column; text-align: center; }
-      .creator-left { flex-direction: column; }
-      .download-box-wrapper { padding: 24px 18px; }
-      .cyber-side-text-left, .cyber-side-text-right, .cyber-slashes { display: none; }
-      .cyber-watermark-bg { font-size: 80px; top: 5%; }
-      .cyber-modal { width: 100%; padding: 18px 14px 24px; }
-      .cyber-card-action-row { flex-direction: column; align-items: stretch; }
-      .cyber-activate-btn { text-align: center; width: 100%; }
+      .nav-links, .nav-btn-follow {
+        display: none !important;
+      }
+      .mobile-toggle {
+        display: flex;
+      }
+      .nav-inner {
+        height: 64px;
+      }
+      .hero {
+        padding: 44px 0 32px;
+      }
+      .hero-title {
+        font-size: 34px;
+        line-height: 1.18;
+        letter-spacing: -0.8px;
+        margin-bottom: 16px;
+      }
+      .hero-subtitle {
+        font-size: 15px;
+        line-height: 1.55;
+        margin-bottom: 22px;
+      }
+      .hero-badge-row {
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .hero-pill {
+        padding: 5px 12px;
+        font-size: 11px;
+      }
+      .email-capture-card {
+        padding: 18px 16px;
+      }
+      .email-form {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .email-input, .email-submit-btn {
+        width: 100% !important;
+        height: 48px;
+        font-size: 14px;
+      }
+      .email-submit-btn {
+        justify-content: center;
+      }
+      .hero-meta {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 18px;
+        font-size: 12px;
+      }
+
+      /* Sections & Grids */
+      .section-title {
+        font-size: 26px;
+        letter-spacing: -0.5px;
+      }
+      .section-desc {
+        font-size: 14px;
+      }
+      .freedom-grid,
+      .download-grid,
+      .steps-grid,
+      .intro-grid,
+      .features-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px;
+      }
+      .comparison-grid {
+        grid-template-columns: 1fr !important;
+        gap: 18px;
+      }
+
+      /* Creator Banner */
+      .creator-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px 18px;
+        gap: 18px;
+      }
+      .creator-left {
+        flex-direction: column;
+        gap: 14px;
+      }
+      .creator-avatar {
+        margin: 0 auto;
+      }
+
+      /* Download Hub */
+      .download-box-wrapper {
+        padding: 22px 16px;
+      }
+      .download-status-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 16px;
+      }
+      .terminal-box {
+        font-size: 11px;
+        padding: 8px 10px;
+      }
+
+      /* Cyber Modal */
+      .cyber-watermark-bg {
+        font-size: 68px;
+        top: 2%;
+      }
+      .cyber-modal {
+        width: 100%;
+        max-width: 100%;
+        padding: 18px 14px 22px;
+        border-radius: 20px;
+      }
+      .cyber-target-card {
+        padding: 10px 12px;
+        border-radius: 14px;
+      }
+      .cyber-main-card {
+        padding: 16px 14px;
+        border-radius: 16px;
+      }
+      .cyber-card-action-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .cyber-activate-btn {
+        width: 100% !important;
+        text-align: center;
+        justify-content: center;
+      }
+
+      /* Footer */
+      .footer {
+        padding: 32px 0;
+      }
+      .footer-links {
+        gap: 12px 16px;
+        font-size: 12.5px;
+      }
+    }
+
+    /* Breakpoint 480px: Small Mobile Phones */
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 14px !important;
+      }
+      .announcement-bar {
+        font-size: 11px;
+        padding: 6px 10px;
+      }
+      .brand-title {
+        font-size: 18px;
+      }
+      .brand-logo {
+        width: 32px;
+        height: 32px;
+      }
+      .btn-primary.nav-btn-cta {
+        padding: 7px 12px;
+        font-size: 12px;
+      }
+      .hero-title {
+        font-size: 28px;
+      }
+      .hero-pill {
+        width: 100%;
+        justify-content: center;
+      }
+      .email-capture-card {
+        border-radius: 14px;
+      }
+      .cyber-target-avatar {
+        width: 38px;
+        height: 38px;
+      }
+      .cyber-target-name {
+        font-size: 13.5px;
+      }
+      .cyber-headline {
+        font-size: 14px;
+      }
+      .cyber-reply-text-box {
+        font-size: 13px;
+        padding: 12px;
+      }
+      .cyber-social-capsule {
+        font-size: 10.5px;
+        padding: 5px 10px;
+      }
+      .step-card, .intro-card, .feature-box, .download-card {
+        padding: 18px 16px;
+      }
+      .faq-q {
+        padding: 14px 16px;
+        font-size: 14px;
+      }
+      .faq-a {
+        padding: 0 16px 14px;
+        font-size: 13px;
+      }
     }
   </style>
 </head>
@@ -1415,16 +1766,56 @@
         <a href="privacy-policy.html" class="nav-link">Privacy Policy</a>
       </nav>
 
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <a href="https://x.com/finnbuilt" target="_blank" rel="noreferrer" class="btn btn-secondary" style="padding: 8px 14px; font-size: 12.5px;">
+      <div class="nav-actions">
+        <a href="https://x.com/finnbuilt" target="_blank" rel="noreferrer" class="btn btn-secondary nav-btn-follow" style="padding: 8px 14px; font-size: 12.5px;">
           <span>Follow @finnbuilt</span>
         </a>
-        <a href="#download" class="btn btn-primary">
+        <a href="#download" class="btn btn-primary nav-btn-cta">
           <span>Get PulseX Free &rarr;</span>
         </a>
+        <button type="button" class="mobile-toggle" id="mobile-toggle" aria-label="Open Navigation Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
+  <aside class="mobile-nav-drawer" id="mobile-nav-drawer" aria-hidden="true">
+    <div class="mobile-nav-header">
+      <a href="#" class="brand" style="text-decoration: none;">
+        <div class="brand-logo" style="width: 32px; height: 32px;">
+          <svg width="18" height="18" viewBox="0 0 32 32" fill="none">
+            <path d="M4 16h6l3-6 4 12 3-8 3 5 5-3" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="brand-title" style="font-size: 18px;">Pulse<span>X</span></div>
+      </a>
+      <button type="button" class="mobile-nav-close" id="mobile-nav-close" aria-label="Close Navigation Menu">✕</button>
+    </div>
+    <nav class="mobile-nav-links">
+      <a href="#download" class="mobile-nav-link">⚡ Download Hub (.ZIP & Git)</a>
+      <a href="#guide" class="mobile-nav-link">📖 60-Second Install Guide</a>
+      <a href="#intro" class="mobile-nav-link">💡 How PulseX Works</a>
+      <a href="#freedom" class="mobile-nav-link">⚖️ 100% Free Forever (MIT)</a>
+      <a href="#comparison" class="mobile-nav-link">🛡️ Anti-Slop vs Wrappers</a>
+      <a href="#demo" class="mobile-nav-link">🎮 Interactive Simulator</a>
+      <a href="#providers" class="mobile-nav-link">🤖 BYOK Models (DeepSeek & more)</a>
+      <a href="#faq" class="mobile-nav-link">❓ Common Questions</a>
+      <a href="privacy-policy.html" class="mobile-nav-link">🔒 Privacy Policy</a>
+    </nav>
+    <div class="mobile-nav-footer">
+      <a href="#download" class="btn btn-primary" style="width: 100%; text-align: center; justify-content: center;">
+        <span>Unlock Free Download &rarr;</span>
+      </a>
+      <a href="https://x.com/finnbuilt" target="_blank" rel="noreferrer" class="btn btn-secondary" style="width: 100%; text-align: center; justify-content: center; margin-top: 10px;">
+        <span>Follow @finnbuilt on X</span>
+      </a>
+    </div>
+  </aside>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -1912,12 +2303,12 @@
         <!-- Intro Card 1 -->
         <div class="intro-card">
           <span class="intro-tag">Core Interface &bull; In-Timeline</span>
-          <h3 class="intro-title">1. The In-Timeline Reply Bar</h3>
+          <h3 class="intro-title">1. Two-State Click-to-Expand Reply Bar</h3>
           <p class="intro-desc">
-            Whenever you click to reply to any tweet on X.com, PulseX mounts directly above the native composer. Click any of the 5 strategic angles to generate a context-aware reply in real time.
+            You see a sleek <strong>⚡ Reply with PulseX</strong> button first. Click it to smoothly unfold the full interface with 5 strategic angles and raw thought synthesis. Zero visual clutter when reading, instant AI leverage when replying.
           </p>
           <div class="intro-tip">
-            💡 <strong>Raw Thoughts Input:</strong> Type a few shorthand notes into the raw thoughts box (e.g. <em>"ads suck before pmf, fix loop first"</em>) and PulseX will expand your exact point into an eloquent reply.
+            💡 <strong>Raw Thoughts Input:</strong> Type a few shorthand notes into the raw thoughts box (e.g. <em>"ads suck before pmf, fix loop first"</em>) and PulseX will expand your exact point into an authentic, human reply.
           </div>
         </div>
 
@@ -2421,6 +2812,40 @@
         processEmailSubmission(email, dlSectionStatus, dlSectionSubmit, false);
       });
     }
+
+    // Mobile Drawer Navigation
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileDrawer = document.getElementById('mobile-nav-drawer');
+    const mobileBackdrop = document.getElementById('mobile-nav-backdrop');
+    const mobileClose = document.getElementById('mobile-nav-close');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link, .mobile-nav-footer a');
+
+    function openMobileMenu() {
+      mobileToggle?.classList.add('active');
+      mobileDrawer?.classList.add('open');
+      mobileBackdrop?.classList.add('open');
+      mobileDrawer?.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+      mobileToggle?.classList.remove('active');
+      mobileDrawer?.classList.remove('open');
+      mobileBackdrop?.classList.remove('open');
+      mobileDrawer?.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    mobileToggle?.addEventListener('click', () => {
+      const isOpen = mobileDrawer?.classList.contains('open');
+      isOpen ? closeMobileMenu() : openMobileMenu();
+    });
+
+    mobileClose?.addEventListener('click', closeMobileMenu);
+    mobileBackdrop?.addEventListener('click', closeMobileMenu);
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
   </script>
 </body>
 </html>

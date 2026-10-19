@@ -806,6 +806,261 @@
     }
     .footer-link:hover { color: var(--emerald-light); }
 
+    /* Download Hub Section */
+    .download-section {
+      padding: 60px 0 80px;
+      position: relative;
+    }
+    .download-box-wrapper {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-emerald);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(16, 185, 129, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+    .download-box-wrapper::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #10b981, #06b6d4, #10b981);
+    }
+    .download-status-banner {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .download-status-banner.locked {
+      background: rgba(6, 182, 212, 0.08);
+      border-color: rgba(6, 182, 212, 0.25);
+    }
+    .download-status-text {
+      font-size: 14px;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .download-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+    .download-card:hover {
+      border-color: var(--border-emerald);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .download-card.recommended {
+      border-color: var(--border-emerald-glow);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.09) 0%, rgba(13, 20, 31, 0.7) 100%);
+    }
+    .download-card-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: var(--emerald-light);
+    }
+    .download-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .download-card-icon {
+      font-size: 28px;
+    }
+    .download-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .download-card-meta {
+      font-size: 12px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      margin-top: 2px;
+    }
+    .download-card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    /* Terminal Command Box */
+    .terminal-box {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #34d399;
+      margin-top: 10px;
+      overflow-x: auto;
+    }
+    .terminal-copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: #fff;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: 0.15s;
+      white-space: nowrap;
+    }
+    .terminal-copy-btn:hover {
+      background: rgba(16, 185, 129, 0.25);
+      border-color: var(--emerald);
+    }
+
+    /* Installation Steps */
+    .guide-section {
+      padding: 70px 0;
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 36px;
+    }
+    .step-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 26px;
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+    .step-card:hover {
+      border-color: var(--border-emerald);
+      transform: translateY(-2px);
+    }
+    .step-num {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--emerald-light);
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-family: var(--font-mono);
+    }
+    .step-title {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .step-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .step-desc code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #38bdf8;
+    }
+
+    /* User Introductions & Interactive Tour */
+    .user-intro-section {
+      padding: 60px 0 80px;
+    }
+    .intro-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 22px;
+      margin-top: 36px;
+    }
+    .intro-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 26px;
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+    }
+    .intro-card:hover {
+      border-color: var(--border-emerald);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+    .intro-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--emerald);
+      margin-bottom: 6px;
+    }
+    .intro-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .intro-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+    .intro-tip {
+      background: rgba(6, 182, 212, 0.08);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #bae6fd;
+      line-height: 1.5;
+    }
+
     @media (max-width: 768px) {
       .hero-title { font-size: 38px; letter-spacing: -1px; }
       .nav-links { display: none; }
@@ -813,6 +1068,7 @@
       .email-form { flex-direction: column; }
       .creator-banner { flex-direction: column; text-align: center; }
       .creator-left { flex-direction: column; }
+      .download-box-wrapper { padding: 24px 18px; }
     }
   </style>
 </head>
@@ -837,6 +1093,9 @@
       </a>
 
       <nav class="nav-links">
+        <a href="#download" class="nav-link">Download</a>
+        <a href="#guide" class="nav-link">Install & Guide</a>
+        <a href="#intro" class="nav-link">How It Works</a>
         <a href="#freedom" class="nav-link">Free Forever (MIT)</a>
         <a href="#comparison" class="nav-link">Anti-Slop</a>
         <a href="#demo" class="nav-link">Live Demo</a>
@@ -849,8 +1108,8 @@
         <a href="https://x.com/finnbuilt" target="_blank" rel="noreferrer" class="btn btn-secondary" style="padding: 8px 14px; font-size: 12.5px;">
           <span>Follow @finnbuilt</span>
         </a>
-        <a href="https://github.com/finnbuilt/pulsex" target="_blank" class="btn btn-primary">
-          <span>GitHub &bull; Free &rarr;</span>
+        <a href="#download" class="btn btn-primary">
+          <span>Get PulseX Free &rarr;</span>
         </a>
       </div>
     </div>
@@ -880,15 +1139,19 @@
         100% Free forever &bull; No monthly SaaS paywalls &bull; No middleman servers.
       </p>
 
-      <!-- Email Capture Form (Free via FormSubmit) -->
+      <!-- Email Capture Form (Free via FormSubmit - Gated Download Flow) -->
       <div class="email-capture-card">
+        <div style="font-size: 13px; font-weight: 600; color: #e2e8f0; margin-bottom: 8px; text-align: left; padding: 0 4px; display: flex; align-items: center; justify-content: space-between;">
+          <span>⚡ Enter your email to unlock instant download (.ZIP):</span>
+          <span style="color: var(--emerald-light); font-size: 11px;">100% Free &bull; Zero Spam</span>
+        </div>
         <form class="email-form" id="email-capture-form" action="https://formsubmit.co/ajax/finnbuilts@gmail.com" method="POST">
-          <input type="hidden" name="_subject" value="PulseX New Subscriber!">
+          <input type="hidden" name="_subject" value="PulseX New Subscriber & Download Request!">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
-          <input type="email" name="email" id="subscriber-email" class="email-input" placeholder="Enter your email for early releases & updates..." required>
+          <input type="email" name="email" id="subscriber-email" class="email-input" placeholder="Enter your email to download extension..." required>
           <button type="submit" class="email-submit-btn" id="email-submit-btn">
-            <span>Join Inner Circle</span>
+            <span>Unlock & Download 🚀</span>
           </button>
         </form>
         <div class="email-status" id="email-status-msg"></div>
@@ -1062,6 +1325,250 @@
                 <span>Insert into Tweet</span>
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Hub & Multiple Download Options -->
+  <section class="download-section" id="download">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Direct Downloads & Packages</div>
+        <h2 class="section-title">Get PulseX Free Forever</h2>
+        <p class="section-desc">
+          Enter your email to unlock instant package downloads, or choose from multiple download options below. 100% Free under MIT.
+        </p>
+      </div>
+
+      <div class="download-box-wrapper">
+        <!-- Dynamic Unlocked / Locked Status Banner -->
+        <div class="download-status-banner" id="download-banner">
+          <div class="download-status-text">
+            <span id="banner-icon" style="font-size: 20px;">⚡</span>
+            <div>
+              <strong id="banner-title" style="color: #fff;">Instant ZIP Download Ready</strong>
+              <div id="banner-desc" style="font-size: 12.5px; color: var(--text-muted);">
+                Enter your email in the box below to start the automatic ZIP download, or select an alternative source.
+              </div>
+            </div>
+          </div>
+          <div id="banner-badge" class="hero-pill hero-pill-emerald">
+            <span>✨ 100% Client-Side MV3</span>
+          </div>
+        </div>
+
+        <!-- Inline Email Unlock Form for users jumping directly to Download -->
+        <div class="email-capture-card" id="download-email-card" style="margin-bottom: 28px;">
+          <form class="email-form" id="download-section-form">
+            <input type="email" id="download-section-email" class="email-input" placeholder="Enter your email to unlock all downloads..." required>
+            <button type="submit" class="email-submit-btn" id="download-section-submit">
+              <span>Unlock All Downloads ⬇️</span>
+            </button>
+          </form>
+          <div class="email-status" id="download-section-status"></div>
+        </div>
+
+        <!-- Download Options Grid -->
+        <div class="download-grid">
+          <!-- Option 1: Direct Extension ZIP -->
+          <div class="download-card recommended">
+            <span class="download-card-badge">Recommended</span>
+            <div>
+              <div class="download-card-header">
+                <div class="download-card-icon">⚡</div>
+                <div>
+                  <h4 class="download-card-title">Production ZIP Package</h4>
+                  <div class="download-card-meta">v1.0.0 &bull; 59.5 KB &bull; Chrome MV3</div>
+                </div>
+              </div>
+              <p class="download-card-desc">
+                Production-ready Chrome extension archive. Pure vanilla JS with zero external dependencies. Extract and load into Chrome, Brave, Edge, or Opera in 60 seconds.
+              </p>
+            </div>
+            <div>
+              <a href="pulsex-cws.zip" download="pulsex-cws.zip" class="btn btn-primary" id="direct-zip-btn" style="width: 100%; margin-top: 10px;">
+                <span>Download pulsex-cws.zip (59KB)</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Option 2: GitHub Release Source Archive -->
+          <div class="download-card">
+            <div>
+              <div class="download-card-header">
+                <div class="download-card-icon">📦</div>
+                <div>
+                  <h4 class="download-card-title">GitHub Source Code</h4>
+                  <div class="download-card-meta">main branch &bull; Full Repo (.zip)</div>
+                </div>
+              </div>
+              <p class="download-card-desc">
+                Complete source code repository including 55 automated unit tests, build scripts, icon generators, and ContextZen methodology context files.
+              </p>
+            </div>
+            <div>
+              <a href="https://github.com/finnbuilt/pulsex/archive/refs/heads/main.zip" target="_blank" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">
+                <span>Download Source (.zip) ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Option 3: Developer Terminal Git Clone -->
+          <div class="download-card">
+            <div>
+              <div class="download-card-header">
+                <div class="download-card-icon">💻</div>
+                <div>
+                  <h4 class="download-card-title">Developer Git Clone</h4>
+                  <div class="download-card-meta">Terminal CLI &bull; Instant Clone</div>
+                </div>
+              </div>
+              <p class="download-card-desc">
+                Clone the repository directly into your local machine for rapid hacking, custom prompt modifications, or local LLM testing.
+              </p>
+              <div class="terminal-box">
+                <span id="git-clone-cmd">git clone https://github.com/finnbuilt/pulsex.git</span>
+                <button type="button" class="terminal-copy-btn" id="copy-clone-btn">Copy</button>
+              </div>
+            </div>
+            <div style="margin-top: 14px;">
+              <a href="https://github.com/finnbuilt/pulsex" target="_blank" class="btn btn-secondary" style="width: 100%;">
+                <span>View on GitHub ⭐️</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Option 4: Chrome Web Store (In Review) -->
+          <div class="download-card">
+            <div>
+              <div class="download-card-header">
+                <div class="download-card-icon">🌐</div>
+                <div>
+                  <h4 class="download-card-title">Chrome Web Store</h4>
+                  <div class="download-card-meta">Official Store Listing &bull; In Review</div>
+                </div>
+              </div>
+              <p class="download-card-desc">
+                1-click installation from the Google Web Store with automatic background updates. Submission package generated and currently under reviewer review.
+              </p>
+            </div>
+            <div>
+              <button type="button" class="btn btn-secondary" onclick="document.getElementById('subscriber-email').focus()" style="width: 100%; margin-top: 10px; opacity: 0.9;">
+                <span>Get Notified on CWS Launch 🔔</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step-by-Step Installation Guide -->
+  <section class="guide-section" id="guide">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Quickstart Installation</div>
+        <h2 class="section-title">Install in 60 Seconds</h2>
+        <p class="section-desc">
+          No command line needed. PulseX runs in any Chromium-based browser (Chrome, Brave, Edge, Opera, Arc).
+        </p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h3 class="step-title">Download & Unpack</h3>
+          <p class="step-desc">
+            Download <code>pulsex-cws.zip</code> using the button above and extract the zip archive into a folder on your computer.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <h3 class="step-title">Open Extension Manager</h3>
+          <p class="step-desc">
+            In Chrome or Brave, open <code>chrome://extensions</code> in your address bar (or <code>edge://extensions</code> in Microsoft Edge).
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <h3 class="step-title">Enable Developer Mode</h3>
+          <p class="step-desc">
+            Turn ON the <strong>"Developer mode"</strong> toggle switch in the top-right corner of the Extensions page.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <h3 class="step-title">Load Unpacked</h3>
+          <p class="step-desc">
+            Click the <strong>"Load unpacked"</strong> button in the top-left toolbar and select your extracted extension folder. PulseX is installed!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- User Introductions & Feature Tour -->
+  <section class="user-intro-section" id="intro">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">User Introductions</div>
+        <h2 class="section-title">How to Use PulseX on X</h2>
+        <p class="section-desc">
+          Designed to be invisible until you need it, and lightning fast when you do. Here is a tour of the core interfaces.
+        </p>
+      </div>
+
+      <div class="intro-grid">
+        <!-- Intro Card 1 -->
+        <div class="intro-card">
+          <span class="intro-tag">Core Interface &bull; In-Timeline</span>
+          <h3 class="intro-title">1. The In-Timeline Reply Bar</h3>
+          <p class="intro-desc">
+            Whenever you click to reply to any tweet on X.com, PulseX mounts directly above the native composer. Click any of the 5 strategic angles to generate a context-aware reply in real time.
+          </p>
+          <div class="intro-tip">
+            💡 <strong>Raw Thoughts Input:</strong> Type a few shorthand notes into the raw thoughts box (e.g. <em>"ads suck before pmf, fix loop first"</em>) and PulseX will expand your exact point into an eloquent reply.
+          </div>
+        </div>
+
+        <!-- Intro Card 2 -->
+        <div class="intro-card">
+          <span class="intro-tag">Power Tool &bull; Copilot Drawer</span>
+          <h3 class="intro-title">2. Floating AI Copilot Drawer</h3>
+          <p class="intro-desc">
+            Look for the emerald pulse button floating at the bottom right of your screen. Drag it anywhere along the screen edge, or click to slide out the 400px frosted obsidian glass drawer.
+          </p>
+          <div class="intro-tip">
+            ⚡ <strong>Multi-Turn Chat:</strong> Chat back and forth with the AI about the tweet, brainstorm counterpoints, generate viral Quote Tweets, or refine tone with <em>"Shorter"</em> or <em>"Punchier"</em>.
+          </div>
+        </div>
+
+        <!-- Intro Card 3 -->
+        <div class="intro-card">
+          <span class="intro-tag">Feed Shield &bull; Noise Filter</span>
+          <h3 class="intro-title">3. Timeline Noise & Ad Filter</h3>
+          <p class="intro-desc">
+            PulseX scans your X timeline in the background. It identifies sponsored/promoted tweets and repetitive giveaway bot spam across multiple languages, dimming them automatically.
+          </p>
+          <div class="intro-tip">
+            🛡️ <strong>Zero Clutter:</strong> Keep your attention focused on high-signal creators. You can check your blocked clutter counter anytime in the extension popup.
+          </div>
+        </div>
+
+        <!-- Intro Card 4 -->
+        <div class="intro-card">
+          <span class="intro-tag">BYOK Engine &bull; Multi-Provider</span>
+          <h3 class="intro-title">4. Universal Model Switcher</h3>
+          <p class="intro-desc">
+            Click the PulseX extension icon in your browser toolbar to choose your AI model. Supports DeepSeek (V3/R1), Claude 3.5 Sonnet, GPT-4o, Gemini 2.0 Flash, Groq, and Local Ollama.
+          </p>
+          <div class="intro-tip">
+            💸 <strong>Zero Cost Hack:</strong> Connect Google Gemini (free API tier from Google AI Studio) or run Ollama on localhost for 100% free, unlimited, zero-cost replies!
           </div>
         </div>
       </div>
@@ -1326,65 +1833,142 @@
       });
     });
 
-    // Free Email Subscription via FormSubmit AJAX (targets finnbuilts@gmail.com)
+    // Terminal Git Clone Copy
+    const copyCloneBtn = document.getElementById('copy-clone-btn');
+    if (copyCloneBtn) {
+      copyCloneBtn.addEventListener('click', () => {
+        const cmd = document.getElementById('git-clone-cmd').textContent.trim();
+        navigator.clipboard.writeText(cmd).then(() => {
+          copyCloneBtn.textContent = 'Copied!';
+          copyCloneBtn.style.background = 'rgba(16, 185, 129, 0.4)';
+          setTimeout(() => {
+            copyCloneBtn.textContent = 'Copy';
+            copyCloneBtn.style.background = '';
+          }, 2000);
+        });
+      });
+    }
+
+    // Gated Download & Free Email Collection Engine
+    function triggerZipDownload() {
+      const link = document.createElement('a');
+      link.href = 'pulsex-cws.zip';
+      link.download = 'pulsex-cws.zip';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function unlockDownloads(email) {
+      localStorage.setItem('pulsex_download_unlocked', 'true');
+      if (email) {
+        try {
+          const list = JSON.parse(localStorage.getItem('pulsex_subscribers') || '[]');
+          list.push({ email, date: new Date().toISOString() });
+          localStorage.setItem('pulsex_subscribers', JSON.stringify(list));
+        } catch (e) {}
+      }
+
+      // Update Download Hub Banner
+      const banner = document.getElementById('download-banner');
+      const bannerIcon = document.getElementById('banner-icon');
+      const bannerTitle = document.getElementById('banner-title');
+      const bannerDesc = document.getElementById('banner-desc');
+      const bannerBadge = document.getElementById('banner-badge');
+      const downloadEmailCard = document.getElementById('download-email-card');
+
+      if (banner) {
+        banner.style.background = 'rgba(16, 185, 129, 0.18)';
+        banner.style.borderColor = 'rgba(16, 185, 129, 0.5)';
+      }
+      if (bannerIcon) bannerIcon.textContent = '🎉';
+      if (bannerTitle) bannerTitle.textContent = 'Downloads Unlocked! (v1.0.0 Ready)';
+      if (bannerDesc) bannerDesc.innerHTML = 'Your ZIP package download has initiated. If it did not start automatically, click <strong>Download pulsex-cws.zip</strong> below.';
+      if (bannerBadge) {
+        bannerBadge.innerHTML = '<span>✅ Verified Subscriber</span>';
+        bannerBadge.style.background = 'rgba(16, 185, 129, 0.3)';
+      }
+      if (downloadEmailCard) {
+        downloadEmailCard.innerHTML = '<div style="text-align: center; color: var(--emerald-light); font-weight: 600; font-size: 13.5px; padding: 10px;">✨ You are verified! Select any package format below or follow the 60-second setup guide.</div>';
+      }
+    }
+
+    // Check if already unlocked from a previous session
+    if (localStorage.getItem('pulsex_download_unlocked') === 'true') {
+      unlockDownloads();
+    }
+
+    async function processEmailSubmission(email, statusElem, submitBtn, redirectSection) {
+      if (!email) return;
+
+      submitBtn.disabled = true;
+      const originalText = submitBtn.innerHTML;
+      submitBtn.textContent = 'Unlocking...';
+      statusElem.textContent = '';
+      statusElem.className = 'email-status';
+
+      try {
+        await fetch('https://formsubmit.co/ajax/finnbuilts@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,
+            action: 'Unlock Download & Subscribe',
+            source: 'PulseX Landing Page',
+            timestamp: new Date().toISOString()
+          })
+        });
+      } catch (err) {
+        // Fallback gracefully — never block download on network quirks
+      }
+
+      // Unlock UI and trigger download
+      unlockDownloads(email);
+      triggerZipDownload();
+
+      statusElem.className = 'email-status success';
+      statusElem.innerHTML = '🎉 Download unlocked! <code>pulsex-cws.zip</code> is downloading. Check below for more options and setup guide!';
+
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span>Downloaded! ✅</span>';
+
+      // Smooth scroll down to download options and guide
+      setTimeout(() => {
+        const downloadSection = document.getElementById('download');
+        if (downloadSection) {
+          downloadSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 900);
+    }
+
+    // Hero Form
     const emailForm = document.getElementById('email-capture-form');
     const emailInput = document.getElementById('subscriber-email');
     const emailSubmitBtn = document.getElementById('email-submit-btn');
     const emailStatusMsg = document.getElementById('email-status-msg');
 
     if (emailForm) {
-      emailForm.addEventListener('submit', async (e) => {
+      emailForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const email = emailInput.value.trim();
-        if (!email) return;
+        processEmailSubmission(email, emailStatusMsg, emailSubmitBtn, true);
+      });
+    }
 
-        emailSubmitBtn.disabled = true;
-        emailSubmitBtn.textContent = 'Subscribing...';
-        emailStatusMsg.textContent = '';
-        emailStatusMsg.className = 'email-status';
+    // Download Section Form
+    const dlSectionForm = document.getElementById('download-section-form');
+    const dlSectionEmail = document.getElementById('download-section-email');
+    const dlSectionSubmit = document.getElementById('download-section-submit');
+    const dlSectionStatus = document.getElementById('download-section-status');
 
-        try {
-          const response = await fetch('https://formsubmit.co/ajax/finnbuilts@gmail.com', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-              email: email,
-              source: 'PulseX Landing Page',
-              timestamp: new Date().toISOString()
-            })
-          });
-
-          if (response.ok) {
-            emailStatusMsg.className = 'email-status success';
-            emailStatusMsg.textContent = '✨ You are in! You will receive early updates and feature drops.';
-            emailInput.value = '';
-            // Store locally as backup
-            try {
-              const list = JSON.parse(localStorage.getItem('pulsex_subscribers') || '[]');
-              list.push({ email, date: new Date().toISOString() });
-              localStorage.setItem('pulsex_subscribers', JSON.stringify(list));
-            } catch (err) {}
-          } else {
-            throw new Error('Failed to submit');
-          }
-        } catch (err) {
-          // Graceful fallback: save in localStorage so email is never lost
-          try {
-            const list = JSON.parse(localStorage.getItem('pulsex_subscribers') || '[]');
-            list.push({ email, date: new Date().toISOString() });
-            localStorage.setItem('pulsex_subscribers', JSON.stringify(list));
-          } catch (e) {}
-
-          emailStatusMsg.className = 'email-status success';
-          emailStatusMsg.textContent = '✨ You are in! Subscribed successfully.';
-          emailInput.value = '';
-        } finally {
-          emailSubmitBtn.disabled = false;
-          emailSubmitBtn.textContent = 'Join Inner Circle';
-        }
+    if (dlSectionForm) {
+      dlSectionForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = dlSectionEmail.value.trim();
+        processEmailSubmission(email, dlSectionStatus, dlSectionSubmit, false);
       });
     }
   </script>
